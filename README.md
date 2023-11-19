@@ -1,1 +1,4 @@
-
+___
+# ATTENDANCE MONITORING AND ACCESS AUTHENTICATION WITH FACE RECOGNITION  
+___
+![](docs/images/facerecog.png)
