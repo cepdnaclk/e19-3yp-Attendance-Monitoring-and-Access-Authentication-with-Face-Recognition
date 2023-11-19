@@ -1,4 +1,4 @@
-![image](https://github.com/cepdnaclk/e19-3yp-Attendance-Monitoringand-Access-Authentication-with-Face-Recognition/assets/115542283/d9e80b3d-9792-4997-8b7d-c854425e6901)___
+
 # ATTENDANCE MONITORING AND ACCESS AUTHENTICATION WITH FACE RECOGNITION  
 ___
 ![](docs/images/facerecog.png)
