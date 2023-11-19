@@ -63,11 +63,14 @@ May receive real-time notifications about attendance events.
 
 
 + ### Control Flow of the System
+  ![](docs/images/1.png)
 + ### Data Flow of the System
+  ![](docs/images/2.png)
 
 ## 4.Infrastructure
 + ### Technology Stack
 + ### Hardware Components
+![](docs/images/3.png)
 ## 5.BOM
 ## 6.Extendibility & Scalability
 
