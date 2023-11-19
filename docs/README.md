@@ -3,8 +3,8 @@ layout: home
 permalink: index.html
 
 # Please update this with your repository name and project title
-repository-name: eYY-3yp-project-template
-title: Project Template
+repository-name: e19-3yp-Attendance-Monitoringand-Access-Authentication-with-Face-Recognition
+title: Attendance Monitoring and Access Authentication with Face Recognition
 ---
 
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
@@ -103,8 +103,8 @@ May receive real-time notifications about attendance events.
 
 ## Links
 
-- [Project Repository](https://github.com/cepdnaclk/{{e19-3yp-Attendance-Monitoringand-Access-Authentication-with-Face-Recognition}}){:target="_blank"}
-- [Project Page](https://cepdnaclk.github.io/{{e19-3yp-Attendance-Monitoringand-Access-Authentication-with-Face-Recognition}}){:target="_blank"}
+- [Project Repository]( page.repository-name }}){:target="_blank"}
+- [Project Page]( page.repository-name }}){:target="_blank"}
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
 
