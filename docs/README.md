@@ -9,14 +9,17 @@ title: Project Template
 
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
 
-# Project Title
-
+# ATTENDANCE MONITORING AND ACCESS AUTHENTICATION WITH FACE RECOGNITION 
 ---
 
+![](../docs/images/facerecog.png)
+
 ## Team
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
+-  E/19/278, Tharudi, [email](mailto:e19278@eng.pdn.ac.lk)
+-  E/19/295, Janitha, [email](mailto:e19295@eng.pdn.ac.lk)
+-  E/19/300, Asela, [email](mailto:e19300@eng.pdn.ac.lk)
+-  E/19/452, Ashan, [email](mailto:e19452@eng.pdn.ac.lk)
+-  E/19/492, Nuwantha, [email](mailto:e19492@eng.pdn.ac.lk)
 
 <!-- Image (photo/drawing of the final hardware) should be here -->
 
@@ -25,47 +28,83 @@ title: Project Template
 <!-- ![Sample Image](./images/sample.png) -->
 
 #### Table of Contents
-1. [Introduction](#introduction)
-2. [Solution Architecture](#solution-architecture )
-3. [Hardware & Software Designs](#hardware-and-software-designs)
-4. [Testing](#testing)
-5. [Detailed budget](#detailed-budget)
-6. [Conclusion](#conclusion)
+1. [Problem Overview](#problem-overview)
+2. [Why is this need?](#detailed-budget)
+3. [Solution Architecture](#solution-architecture)
+4. [Infrastructure](#infrastructure)
+5. [BOM](#bom)
+6. [Extendibility & Scalability](#extendibility)
 7. [Links](#links)
 
-## Introduction
+## 1.Problem Overview
+Deficiencies of Manual Attendance Management System​
++ Time-Consuming Process​
++ Prone to Errors​
++ Lack of Real-Time Data​
++ Bureaucratic Hassles​
++ Limited Scalability​
++ Security Concerns​
+ 
+## 2.Why is this need?
++ Efficiency in Tracking With Face Detection​
++ Multi Security Levels​
++ Error Reduction​
++ Real-Time Updates​
++ Streamlined Administration​
++ Scalability​
++ Enhanced Security
+  
+## 3.Solution Architecture
++ ###  High-Level Overview
+  
+  Out attendance management System has 3 tiers
++ Attendance Management Device
++ Backend Server
++ Frontend Dashboards (User & Admin)
+  
++ ### Roles of the System
 
-Description of the real world problem and solution, impact
+
+### 1.Admin
+Admin can add and remove employees
+See the employee details (image, name, absent date)
+Unauthorized person entering alert (optional)
+
+To access the admin dashboard
+
+Should have a current date attendance tracked by face detection
+Fingerprint access or keypad
+
+  ### 2. Employees
+
+Attendance marks either face detection or fingerprint
+They have their profile to see their attendance
 
 
-## Solution Architecture
+   ### 3. Manager
+Manages teams or departments.
+Monitors employee attendance and performance.
+May receive real-time notifications about attendance events.
 
-High level diagram + description
 
-## Hardware and Software Designs
++ ### Control Flow of the System
+  ![](../docs/images/1.png)
++ ### Data Flow of the System
+  ![](../docs/images/2.png)
 
-Detailed designs with many sub-sections
+## 4.Infrastructure
++ ### Technology Stack
+![](../docs/images/4.png)
 
-## Testing
-
-Testing done on hardware and software, detailed + summarized results
-
-## Detailed budget
-
-All items and costs
-
-| Item          | Quantity  | Unit Cost  | Total  |
-| ------------- |:---------:|:----------:|-------:|
-| Sample item   | 5         | 10 LKR     | 50 LKR |
-
-## Conclusion
-
-What was achieved, future developments, commercialization plans
++ ### Hardware Components
+![](../docs/images/3.png)
+## 5.BOM
+## 6.Extendibility & Scalability
 
 ## Links
 
-- [Project Repository](https://github.com/cepdnaclk/{{ page.repository-name }}){:target="_blank"}
-- [Project Page](https://cepdnaclk.github.io/{{ page.repository-name}}){:target="_blank"}
+- [Project Repository](https://github.com/cepdnaclk/{{e19-3yp-Attendance-Monitoringand-Access-Authentication-with-Face-Recognition}}){:target="_blank"}
+- [Project Page](https://cepdnaclk.github.io/{{e19-3yp-Attendance-Monitoringand-Access-Authentication-with-Face-Recognition}}){:target="_blank"}
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
 
