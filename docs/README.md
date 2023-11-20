@@ -12,7 +12,7 @@ title: Attendance Monitoring and Access Authentication with Face Recognition
 # ATTENDANCE MONITORING AND ACCESS AUTHENTICATION WITH FACE RECOGNITION 
 ---
 
-![](../docs/images/facerecog.png)
+![Face Recognition](../docs/images/facerecog.png)
 
 ## Team
 -  E/19/278, Tharudi, [email](mailto:e19278@eng.pdn.ac.lk)
@@ -88,13 +88,13 @@ May receive real-time notifications about attendance events.
 
 
 + ### Control Flow of the System
-  ![](../docs/images/1.png)
+  ![Control Flow](../docs/images/1.png)
 + ### Data Flow of the System
-  ![](../docs/images/2.png)
+  ![Data Flow](../docs/images/2.png)
 
 ## 4.Infrastructure
 + ### Technology Stack
-![](../docs/images/4.png)
+![Technology Stack](../docs/images/4.png)
 
 + ### Hardware Components
 ![](../docs/images/3.png)
