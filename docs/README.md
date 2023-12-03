@@ -3,7 +3,7 @@ layout: home
 permalink: index.html
 
 # Please update this with your repository name and project title
-repository-name: e19-3yp-Attendance-Monitoringand-Access-Authentication-with-Face-Recognition
+repository-name: e19-3yp-Attendance-Monitoring-and-Access-Authentication-with-Face-Recognition
 title: Attendance Monitoring and Access Authentication with Face Recognition
 ---
 
