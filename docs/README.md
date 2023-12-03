@@ -75,13 +75,13 @@ To access the admin dashboard
 Should have a current date attendance tracked by face detection
 Fingerprint access or keypad
 
-  ### 2. Employees
+### 2. Employees
 
 Attendance marks either face detection or fingerprint
 They have their profile to see their attendance
 
 
-   ### 3. Manager
+### 3. Manager
 Manages teams or departments.
 Monitors employee attendance and performance.
 May receive real-time notifications about attendance events.
