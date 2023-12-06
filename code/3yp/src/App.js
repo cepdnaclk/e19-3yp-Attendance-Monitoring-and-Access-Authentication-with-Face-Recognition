@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 
+/*Initiate the routing here and start*/
 function App() {
   return (
     <div className="App">
