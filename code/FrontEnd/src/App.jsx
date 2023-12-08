@@ -1,17 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React, { useState } from 'react';
+import {BrowserRouter,Route,Routes} from 'react-router-dom';
 import './App.css'
+import Signin from './pages/Sign_in.jsx';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <React.Fragment>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Signin />} />
+          
+        </Routes>
+      </BrowserRouter>
+    </React.Fragment>
   )
 }
 
