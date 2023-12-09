@@ -8,6 +8,7 @@ import {
 }
 from 'mdb-react-ui-kit';
 import '../css/signin.css';
+import loginimage from '../assets/facerecog.png';
 
 function Signin() {
   return (
@@ -19,9 +20,9 @@ function Signin() {
           <div className="d-flex flex-column ms-5">
 
             <div className="text-center">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
+              <img src= {loginimage}
                 style={{width: '185px'}} alt="logo" />
-              <h4 className="mt-1 mb-5 pb-1">We are The Lotus Team</h4>
+              <h4 className="mt-1 mb-5 pb-1">Attedance Management System</h4>
             </div>
 
             <p>Please login to your account</p>
