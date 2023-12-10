@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState} from 'react';
 import {
   MDBBtn,
   MDBContainer,
@@ -9,8 +9,37 @@ import {
 from 'mdb-react-ui-kit';
 import '../css/signin.css';
 import loginimage from '../assets/facerecog.png';
+import { useNavigate} from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
+
 
 function Signup() {
+  const navigate = useNavigate(); // Initialize the useNavigate hook
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignup = (e) => {
+    e.preventDefault();  // Prevent the default behaviour of the form submit button(reload the page)
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      
+      console.log(userCredential);
+      navigate('/'); // Use the push method to navigate to the signin page
+      // ...
+    }).catch((error) => {
+      //const errorCode = error.code;
+      //const errorMessage = error.message;
+      console.log(error);
+    });
+  }
+
+  const handleSigin = () => {
+    navigate('/'); // Use the push method to navigate to the signin page
+  }
+
   return (
     <MDBContainer className="my-5 gradient-form" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)'}}>
 
@@ -25,19 +54,25 @@ function Signup() {
             <p>Please enter your details</p>
 
 
-            <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email'/>
-            <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'/>
+            <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}/>
+
+
+            <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}/>
 
 
             <div className="text-center pt-1 mb-3 pb-1">
-              <MDBBtn className="mb-4 w-100 gradient-custom-2">Sign in</MDBBtn>
-              <a className="text-muted" href="#!">Forgot password?</a>
+              <MDBBtn className="mb-4 w-100 gradient-custom-2" onClick={handleSignup}>Sign up</MDBBtn>
+              
             </div>
 
             <div className="d-flex flex-row align-items-center justify-content-center mt-3 pb-1 mb-3">
-              <p className="mb-2 mt-1">Don't have an account?</p>
-              <MDBBtn outline className='mx-2' color=''>
-                Sign Up
+              <p className="mb-2 mt-1">Do you have an account?</p>
+              <MDBBtn outline className='mx-2' color='' onClick={handleSigin}>
+                Sign in
               </MDBBtn>
             </div>
 
