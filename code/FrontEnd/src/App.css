@@ -33,6 +33,19 @@
   }
 }
 
+@media only screen and (max-width: 600px) {
+  /* CSS rules for mobile devices */
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  /* CSS rules for tablets */
+}
+
+@media only screen and (min-width: 1025px) {
+  /* CSS rules for laptops/desktops */
+}
+
+
 .card {
   padding: 2em;
 }
