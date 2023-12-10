@@ -9,10 +9,20 @@ import {
 from 'mdb-react-ui-kit';
 import '../css/signin.css';
 import loginimage from '../assets/facerecog.png';
+import { useNavigate} from 'react-router-dom';
+
 
 function Signin() {
 
-  
+  const navigate = useNavigate(); // Initialize the useNavigate hook
+
+  const handleSignUpClick = () => {
+    
+    navigate('/signup'); // Use the push method to navigate to the signup page
+    
+  };
+
+
   return (
     <MDBContainer className="my-5 gradient-form" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)'}}>
 
@@ -38,7 +48,7 @@ function Signin() {
 
             <div className="d-flex flex-row align-items-center justify-content-center mt-3 pb-1 mb-3">
               <p className="mb-2 mt-1">Don't have an account?</p>
-              <MDBBtn outline className='mx-2' color=''>
+              <MDBBtn outline className='mx-2' color='' onClick={handleSignUpClick}>
                 Sign Up
               </MDBBtn>
             </div>
