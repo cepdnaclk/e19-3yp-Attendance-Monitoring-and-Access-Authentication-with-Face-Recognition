@@ -10,7 +10,7 @@ from 'mdb-react-ui-kit';
 import '../css/signin.css';
 import loginimage from '../assets/facerecog.png';
 
-function Signin() {
+function Signup() {
   return (
     <MDBContainer className="my-5 gradient-form" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)'}}>
 
@@ -22,7 +22,7 @@ function Signin() {
               <h4 className="mt-3 mb-3 pb-1" >Attedance Management System</h4>
             </div>
 
-            <p>Please login to your account</p>
+            <p>Please enter your details</p>
 
 
             <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email'/>
@@ -72,4 +72,4 @@ function Signin() {
       {/* </MDBRow> */}
 
 
-export default Signin;
+export default Signup;
