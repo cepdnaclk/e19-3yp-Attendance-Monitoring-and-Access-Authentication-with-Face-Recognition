@@ -48,7 +48,7 @@ function Signin() {
 
         </MDBCol>
 
-        <MDBCol col='6' className="mb-5">
+        {/* <MDBCol col='6' className="mb-5">
           <div className="d-flex flex-column  justify-content-center gradient-custom-2 h-100 mb-4">
 
             <div className="text-white px-3 py-4 p-md-5 mx-md-4">
@@ -61,7 +61,7 @@ function Signin() {
 
           </div>
 
-        </MDBCol>
+        </MDBCol> */}
 
       </MDBRow>
 
