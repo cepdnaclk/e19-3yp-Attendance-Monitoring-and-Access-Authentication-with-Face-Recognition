@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import {
   MDBBtn,
   MDBContainer,
@@ -10,9 +10,29 @@ from 'mdb-react-ui-kit';
 import '../css/signin.css';
 import loginimage from '../assets/facerecog.png';
 import { useNavigate} from 'react-router-dom';
+import { auth } from '../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 
 function Signin() {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignin = (e) => {
+    e.preventDefault();  // Prevent the default behaviour of the form submit button(reload the page)
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      
+      console.log(userCredential);
+      // ...
+    }).catch((error) => {
+      //const errorCode = error.code;
+      //const errorMessage = error.message;
+      console.log(error);
+    });
+  }
 
   const navigate = useNavigate(); // Initialize the useNavigate hook
 
@@ -37,12 +57,18 @@ function Signin() {
             <p>Please login to your account</p>
 
 
-            <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email'/>
-            <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'/>
+            <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}/>
+
+
+            <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}/>
 
 
             <div className="text-center pt-1 mb-3 pb-1">
-              <MDBBtn className="mb-4 w-100 gradient-custom-2">Sign in</MDBBtn>
+              <MDBBtn className="mb-4 w-100 gradient-custom-2" onClick={handleSignin}>Sign in</MDBBtn>
               <a className="text-muted" href="#!">Forgot password?</a>
             </div>
 
