@@ -1,4 +1,6 @@
-# ATTENDANCE MONITORING AND ACCESS AUTHENTICATION WITH FACE RECOGNITION
+# FACE-SECURE
+
+## Attendance Management System with Face Recognition
 
 ---
 
