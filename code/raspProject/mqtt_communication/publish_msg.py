@@ -1,9 +1,9 @@
 import random
 import time
-import config
+import config_mqtt
 from paho.mqtt import client as mqtt_client
 
-
+'''
 broker = config.broker
 port = config.port
 topic = config.topic
@@ -51,3 +51,4 @@ def run():
 
 if __name__ == '__main__':
     run()
+'''

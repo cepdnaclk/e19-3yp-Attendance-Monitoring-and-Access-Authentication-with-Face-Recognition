@@ -1,34 +1,9 @@
 import subprocess
 import random
 import threading
-
-import mqtt_communication.config as config
+import mqtt_communication.config_mqtt as config
 from paho.mqtt import client as mqtt_client
-
-script_path_encode = "face_recognition/encode_faces.py"
-script_path_recognize = "face_recognition/recognize_faces_image.py"
-
-dataset_path = "face_recognition/datasets"
-
-recognize_path = "face_recognition/captured/001.jpeg"
-encodings_path = "face_recognition/encodings.pickle"
-detection_method = "hog"  # or "hog"
-
-encoding_command = [
-    "python3",
-    script_path_encode,
-    "-i", dataset_path,
-    "-e", encodings_path,
-    "-d", detection_method
-]
-
-recognize_command = [
-    "python3",
-    script_path_recognize,
-    "-e", encodings_path,
-    "-i", recognize_path,
-    "-d", detection_method
-]
+from control_logic import json_decorder
 
 broker = config.broker
 port = config.port
@@ -58,10 +33,7 @@ def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
         payload = msg.payload.decode()
         print(f"Received `{payload}` from `{msg.topic}` topic")
-        if msg.topic == topic and payload.lower() == "update_device":
-            print("Running Device Database Update...")
-            #subprocess.run(encoding_command)
-            threading.Thread(target=subprocess.run, args=(encoding_command,)).start()
+        json_decorder.json_decorator(msg)
 
     client.subscribe(topic)
     client.on_message = on_message
