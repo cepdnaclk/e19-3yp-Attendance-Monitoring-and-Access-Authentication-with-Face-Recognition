@@ -16,10 +16,13 @@ def motion_detector():
             if security_level == "easy":
                 print("Easy Mode")
 
+                # face capture
+
             elif security_level == "normal":
                 print("Normal Mode")
 
-                # find_f = 1
+                # face capture
+
                 find_f = fingerprint_reader.find_print()
                 if find_f == -1:
                     print("No Fingerprint Detected")
@@ -28,6 +31,18 @@ def motion_detector():
 
             elif security_level == "hard":
                 print("Hard Mode")
+
+                # face capture
+
+
+                find_f = fingerprint_reader.find_print()
+                if find_f == -1:
+                    print("No Fingerprint Detected")
+                elif find_f == 1:
+                    print("Fingerprint Detected")
+
+                pincode = pin_reader.get_pin_from_keypad()
+                print("Entered PIN code:", pincode)
         else:
             print("No Motion")
 
