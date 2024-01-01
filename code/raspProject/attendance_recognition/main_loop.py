@@ -19,6 +19,7 @@ def motion_detector():
             elif security_level == "normal":
                 print("Normal Mode")
 
+                # find_f = 1
                 find_f = fingerprint_reader.find_print()
                 if find_f == -1:
                     print("No Fingerprint Detected")
