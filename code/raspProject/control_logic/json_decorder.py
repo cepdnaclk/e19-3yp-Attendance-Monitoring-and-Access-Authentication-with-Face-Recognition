@@ -1,7 +1,7 @@
 import json
 from control_logic import cmd_scripts
 import os
-from capture_face import make_folder
+from config_logic import make_folder
 
 
 def json_decorator(msg):
