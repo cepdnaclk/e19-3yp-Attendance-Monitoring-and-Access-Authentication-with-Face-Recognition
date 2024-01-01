@@ -5,7 +5,7 @@ import threading
 import mqtt_communication.config_mqtt as config
 from paho.mqtt import client as mqtt_client
 from control_logic import json_decorder
-from attendance_recognition import motion_detection
+from attendance_recognition import main_loop
 
 broker = config.broker
 port = config.port
