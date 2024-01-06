@@ -17,6 +17,9 @@ client_id_sub = f'python-mqtt-{random.randint(0, 100)}'
 username = config.username
 password = config.password
 
+# Event to control the read_input function
+event = threading.Event()
+
 
 def connect_mqtt() -> mqtt_client:
     def on_connect(client, userdata, flags, rc):
@@ -35,6 +38,8 @@ def connect_mqtt() -> mqtt_client:
 
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
+        global event  # Use the global event
+
         payload = msg.payload.decode()
         print(f"Received `{payload}` from `{msg.topic}` topic")
 
@@ -43,9 +48,13 @@ def subscribe(client: mqtt_client):
         if json_payload.get("mode", "").lower() == "configure":
             print("Configuration Mode Activated")
             json_decorder.json_decorator(msg)
+            # Stop reading input in configure mode
+            event.clear()
 
         elif json_payload.get("mode", "").lower() == "active":
             print("Active Mode Activated")
+            # Start reading input in active mode
+            event.set()
 
         elif json_payload.get("mode", "").lower() == "unlock":
             print("Unlock the Door")
@@ -55,7 +64,10 @@ def subscribe(client: mqtt_client):
 
 
 def read_input():
-    main_loop.motion_detector()
+    if event.is_set():
+        main_loop.motion_detector()
+    else:
+        time.sleep(1)
 
 
 def run():

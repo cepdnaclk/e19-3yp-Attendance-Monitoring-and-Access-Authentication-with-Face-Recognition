@@ -9,11 +9,10 @@ pir = MotionSensor(4)
 
 
 def motion_detector():
-    while True:
-        if pir.motion_detected:
-            print("Motion Detected")
-            time.sleep(2)
+    if pir.motion_detected:
+        print("Motion Detected")
+        time.sleep(1)
 
-        else:
-            print("No Motion")
-            time.sleep(2)
+    else:
+        print("No Motion")
+        time.sleep(1)
