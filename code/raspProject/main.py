@@ -55,9 +55,7 @@ def subscribe(client: mqtt_client):
 
 
 def read_input():
-    while True:
-        print("Active Mode Activated")
-        time.sleep(2)
+    main_loop.motion_detector()
 
 
 def run():
