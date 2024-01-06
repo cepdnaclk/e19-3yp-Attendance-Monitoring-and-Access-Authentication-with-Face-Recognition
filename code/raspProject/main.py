@@ -2,6 +2,8 @@ import json
 import subprocess
 import random
 import threading
+import time
+
 import mqtt_communication.config_mqtt as config
 from paho.mqtt import client as mqtt_client
 from control_logic import json_decorder
@@ -45,14 +47,17 @@ def subscribe(client: mqtt_client):
         elif json_payload.get("mode", "").lower() == "active":
             print("Active Mode Activated")
 
+        elif json_payload.get("mode", "").lower() == "unlock":
+            print("Unlock the Door")
+
     client.subscribe(topic)
     client.on_message = on_message
 
 
 def read_input():
     while True:
-        user_input = input("Enter message to publish to MQTT topic: ")
-        print(user_input)
+        print("Active Mode Activated")
+        time.sleep(2)
 
 
 def run():
