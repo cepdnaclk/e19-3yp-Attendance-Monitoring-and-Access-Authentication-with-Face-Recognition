@@ -17,5 +17,7 @@ def create_folder(folder_name):
             print(f"Folder '{folder_name}' created in 'face_detection' folder.")
         else:
             print(f"Folder '{folder_name}' already exists in 'face_detection/datasets' folder.")
+
+        return folder_path
     else:
         print("Invalid or missing folder name in the JSON payload.")

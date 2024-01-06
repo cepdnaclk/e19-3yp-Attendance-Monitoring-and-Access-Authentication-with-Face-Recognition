@@ -4,7 +4,8 @@ import cv2
 
 def capture_face_detection():
     script_path = os.path.abspath(__file__)  # Get the absolute path of the script
-    fr_path = os.path.join(script_path, "captured")
+    root_path = os.path.dirname(os.path.dirname(script_path))  # Navigate up one level to the project root
+    fr_path = os.path.join(root_path, "captured")
 
     # Create the 'captured' directory if it doesn't exist
     if not os.path.exists(fr_path):
@@ -15,13 +16,16 @@ def capture_face_detection():
         faces = face_classifier.detectMultiScale(gray_image, 1.1, 15, minSize=(150, 150))
         return len(faces) > 0  # return True if a face was detected, False otherwise
 
-    face_classifier = cv2.CascadeClassifier(
-        cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-    )
+        # face_classifier = cv2.CascadeClassifier(
+        #   cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+        # )
+
+    cascade_path = "/usr/share/opencv4/haarcascades/haarcascade_frontalface_default.xml"
+    face_classifier = cv2.CascadeClassifier(cascade_path)
 
     video_capture = cv2.VideoCapture(0)
-    frame_count = 0
-    max_frames = 3
+    frame_count = 1
+    max_frames = 2
 
     while frame_count < max_frames:
         result, video_frame = video_capture.read()
@@ -41,11 +45,14 @@ def capture_face_detection():
     video_capture.release()
     cv2.destroyAllWindows()
 
+    return frame_count == max_frames
 
-def capture_face_storing(foldername):
-    script_path = os.path.abspath(__file__)  # Get the absolute path of the script
-    fr_path = os.path.join(script_path, "datasets")
-    folder_path = os.path.join(fr_path, foldername)
+
+def capture_face_storing(folder_name, folder_path):
+    #script_path = os.path.abspath(__file__)  # Get the absolute path of the script
+    #root_path = os.path.dirname(os.path.dirname(script_path))  # Navigate up one level to the project root
+    #fr_path = os.path.join(root_path, "datasets")
+    #folder_path = os.path.join(fr_path, folder_name)
 
     # Create the 'captured' directory if it doesn't exist
     if not os.path.exists(folder_path):
@@ -56,9 +63,8 @@ def capture_face_storing(foldername):
         faces = face_classifier.detectMultiScale(gray_image, 1.1, 15, minSize=(150, 150))
         return len(faces) > 0  # return True if a face was detected, False otherwise
 
-    face_classifier = cv2.CascadeClassifier(
-        cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-    )
+    cascade_path = "/usr/share/opencv4/haarcascades/haarcascade_frontalface_default.xml"
+    face_classifier = cv2.CascadeClassifier(cascade_path)
 
     video_capture = cv2.VideoCapture(0)
     frame_count = 0
@@ -81,3 +87,5 @@ def capture_face_storing(foldername):
 
     video_capture.release()
     cv2.destroyAllWindows()
+
+    return frame_count == max_frames
