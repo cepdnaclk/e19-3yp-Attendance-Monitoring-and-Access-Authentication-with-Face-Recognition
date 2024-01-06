@@ -121,7 +121,7 @@ def enroll_finger(location):
 
         if fingerimg == 1:
             print("Remove finger")
-            time.sleep(1)
+            time.sleep(2)
             while i != adafruit_fingerprint.NOFINGER:
                 i = finger.get_image()
 
@@ -140,6 +140,7 @@ def enroll_finger(location):
     i = finger.store_model(location)
     if i == adafruit_fingerprint.OK:
         print("Stored")
+        return True
     else:
         if i == adafruit_fingerprint.BADLOCATION:
             print("Bad storage location")
@@ -148,8 +149,6 @@ def enroll_finger(location):
         else:
             print("Other error")
         return False
-
-    return True
 
 
 def save_fingerprint_image(filename):
