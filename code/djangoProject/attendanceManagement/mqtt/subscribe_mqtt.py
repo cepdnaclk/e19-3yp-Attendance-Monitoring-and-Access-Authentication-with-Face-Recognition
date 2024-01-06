@@ -1,13 +1,13 @@
-import time
+import os
+import threading
 from paho.mqtt import client as mqtt_client
 from attendanceManagement.mqtt import config_mqtt
-import json
-import os
+from attendanceManagement.control_logic import json_decorder
+
 
 broker = config_mqtt.broker
 port = config_mqtt.port
 topic = config_mqtt.topic
-# generate client ID with pub prefix randomly
 client_id = config_mqtt.client_id
 username = config_mqtt.username
 password = config_mqtt.password
@@ -21,7 +21,7 @@ def connect_mqtt():
         if rc == 0:
             print("Connected to MQTT Broker!")
         else:
-            print("Failed to connect, return code %d\n", rc)
+            print(f"Failed to connect, return code {rc}")
 
     client = mqtt_client.Client(client_id)
     client.tls_set(ca_certs=cert_path)
@@ -31,25 +31,23 @@ def connect_mqtt():
     return client
 
 
-def publish(client, json_data):
-    try:
-        msg = str(json_data)
-        result = client.publish(topic, msg)
-        status = result.rc
-        if status == mqtt_client.MQTT_ERR_SUCCESS:
-            print(f"Send `{msg}` to topic `{topic}`")
-        else:
-            print(f"Failed to send message to topic {topic}. Result code: {status}")
-    except Exception as e:
-        print(f"Error publishing message: {e}")
+def subscribe(client: mqtt_client):
+    def on_message(client, userdata, msg):
+        print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+        #json_decorder.json_decorator(msg.payload.decode())
+
+    client.subscribe(topic)
+    client.on_message = on_message
 
 
-def run(data):
-    json_data = json.dumps(data)
+def mqtt_loop():
     client = connect_mqtt()
-    client.loop_start()
-    while not client.is_connected():
-        time.sleep(1)
-    client.publish(topic, json_data)
-    time.sleep(1)
-    client.disconnect()
+    subscribe(client)
+    client.loop_forever()
+
+
+def start_mqtt_thread():
+    mqtt_thread = threading.Thread(target=mqtt_loop)
+    mqtt_thread.daemon = True
+    mqtt_thread.start()
+

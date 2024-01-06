@@ -1,3 +1,6 @@
+import json
+import time
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -10,7 +13,7 @@ class HomeView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        content = {'message': 'Welcome to the JWT Authentification page using React Js and Django!'}
+        content = {'message': 'Welcome to the JWT Authentication page using React Js and Django!'}
         return Response(content)
 
 
@@ -29,21 +32,26 @@ class LogoutView(APIView):
 
 
 class ConfigureDeviceView(APIView):
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         try:
-            # Extract JSON data from the request
-            json_data = request.data
-
-            # Connect to MQTT broker
-            mqtt_client = publish_msg.connect_mqtt()
-            mqtt_client.loop_start()
-
-            # Publish the JSON data to the MQTT topic
-            publish_msg.publish(mqtt_client, json_data)
+            publish_msg.run(request.data)
 
             return Response({'message': 'Configuration sent to MQTT'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'message': 'Failed to send configuration to MQTT'},
+            return Response({'message': f'Failed to send configuration to MQTT: {e}'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class ActiveDeviceView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        try:
+            publish_msg.run(request.data)
+
+            return Response({'message': 'Activation sent to MQTT'}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'message': f'Failed to send activation to MQTT: {e}'},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
