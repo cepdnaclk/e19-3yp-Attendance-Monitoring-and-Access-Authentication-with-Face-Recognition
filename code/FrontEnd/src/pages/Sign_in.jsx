@@ -15,7 +15,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 
 
 function Signin() {
-
+  const navigate = useNavigate(); // Initialize the useNavigate hook
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -26,6 +26,13 @@ function Signin() {
       // Signed in 
       
       console.log(userCredential);
+      const email = userCredential.user.email;
+      if (userCredential.user.email == "admin@gmail.com") {
+        navigate('/admin'); // Use the push method to navigate to the admin page
+      }
+      else{
+        navigate('/user' , { state: { email: email } }); // Use the push method to navigate to the user page
+      }
       // ...
     }).catch((error) => {
       //const errorCode = error.code;
@@ -34,7 +41,7 @@ function Signin() {
     });
   }
 
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+  
 
   const handleSignUpClick = () => {
     
