@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'attendanceManagement',
     'corsheaders',
     'rest_framework',
-    'rest_framework_simplejwt.token_blacklist'
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True # added the custom CORS header middleware in MIDDLEWARE to avoid the CORS related issue.
@@ -141,6 +141,10 @@ SIMPLE_JWT = {
      'ROTATE_REFRESH_TOKENS': True,
      'BLACKLIST_AFTER_ROTATION': True
 }
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
 
 # MQTT Settings
 MQTT_SERVER = 'i5363520.ala.us-east-1.emqxsl.com'

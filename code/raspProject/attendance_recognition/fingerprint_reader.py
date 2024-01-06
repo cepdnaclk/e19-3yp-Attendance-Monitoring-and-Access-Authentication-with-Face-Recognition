@@ -1,6 +1,3 @@
-# SPDX-FileCopyrightText: 2021 lady for Adafruit Industries
-# SPDX-License-Identifier: MIT
-
 import time
 import serial
 import adafruit_fingerprint
