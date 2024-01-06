@@ -1,13 +1,13 @@
 import subprocess
 
 
-script_path_encode = "face_recognition/encode_faces.py"
-script_path_recognize = "face_recognition/recognize_faces_image.py"
+script_path_encode = "face_detection/encode_faces.py"
+script_path_recognize = "face_detection/recognize_faces_image.py"
 
-dataset_path = "face_recognition/datasets"
+dataset_path = "face_detection/datasets"
 
-recognize_path = "face_recognition/captured/001.jpeg"
-encodings_path = "face_recognition/encodings.pickle"
+recognize_path = "face_detection/captured/001.jpeg"
+encodings_path = "face_detection/encodings.pickle"
 detection_method = "hog"  # or "hog"
 
 encoding_command = [

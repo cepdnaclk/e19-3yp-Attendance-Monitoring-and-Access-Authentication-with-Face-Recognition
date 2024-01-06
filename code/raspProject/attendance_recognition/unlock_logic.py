@@ -2,7 +2,21 @@ import os
 from attendance_recognition import capture_face, fingerprint_reader, pin_reader
 from mqtt_communication import publish_msg
 
-security_level = os.environ['SECURITY_LEVEL']
+#security_level = os.environ['SECURITY_LEVEL']
+security_level = 'easy'
+
+
+def easy_mode():
+    pass
+
+
+def normal_mode():
+    pass
+
+
+def hard_mode():
+    pass
+
 
 def unlock_logic():
     if security_level == "easy":
