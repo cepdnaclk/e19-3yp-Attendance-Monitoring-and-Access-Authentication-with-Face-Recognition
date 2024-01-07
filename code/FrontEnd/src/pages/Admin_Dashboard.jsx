@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MDBCard,
     MDBContainer,
     MDBCardBody,
@@ -12,6 +12,14 @@ import Navbar from '../component/navbar';
 
 const Admin_Dashboard = () => {
     const [selectedValue, setSelectedValue] = useState('Not Selected');
+    const [isAuth, setIsAuth] = useState(false);
+
+    useEffect(() => {
+        if (localStorage.getItem('access_token') !== null) {
+           setIsAuth(true); 
+         }
+       }, [isAuth]);
+       
     const handleDropdownSelect = (value) => {
         setSelectedValue(value);
     };
