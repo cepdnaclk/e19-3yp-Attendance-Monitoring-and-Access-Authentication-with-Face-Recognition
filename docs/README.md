@@ -34,7 +34,8 @@ title: Attendance Monitoring and Access Authentication with Face Recognition
 4. [Infrastructure](#infrastructure)
 5. [BOM](#bom)
 6. [Extendibility & Scalability](#extendibility)
-7. [Links](#links)
+7. [Testing](#testing)
+8. [Links](#links)
 
 ## 1.Problem Overview
 Deficiencies of Manual Attendance Management System​
