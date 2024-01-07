@@ -64,10 +64,11 @@ def subscribe(client: mqtt_client):
 
 
 def read_input():
-    if event.is_set():
-        main_loop.motion_detector()
-    else:
-        time.sleep(1)
+    while True:
+        if event.is_set():
+            main_loop.motion_detector()
+        else:
+            time.sleep(1)
 
 
 def run():
