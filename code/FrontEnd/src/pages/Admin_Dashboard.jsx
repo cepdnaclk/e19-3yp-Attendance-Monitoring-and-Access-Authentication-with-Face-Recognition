@@ -47,10 +47,10 @@ const Admin_Dashboard = () => {
                                     <div className='mt-5'>
                                         <MDBRadio name='flexRadioDefault' id='flexRadioDefault1' label='Security Level 1' disabled={selectedValue === 'Active'}/>
                                         <MDBRadio name='flexRadioDefault' id='flexRadioDefault2' label='Security Level 2' disabled={selectedValue === 'Active'}/>
-                                        <MDBRadio name='flexRadioDefault' id='flexRadioDefault2' label='Security Level 3' disabled={selectedValue === 'Active'}/>
+                                        <MDBRadio name='flexRadioDefault' id='flexRadioDefault2' label='Security Level 3' disabled={selectedValue === 'Active'} defaultChecked/>
                                     </div>
                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end mb-1">
-                                        <MDBBtn>Apply</MDBBtn>
+                                        <MDBBtn disabled={selectedValue === 'Active' || selectedValue === 'Not Selected'}>Apply</MDBBtn>
                                     </div>
                                     <br />
                                 </div>
@@ -95,7 +95,7 @@ const Admin_Dashboard = () => {
                                 This will Enable only for Configure mode
                             </MDBCardText>
                             <MDBInput label='New Employee Name' id='form1' type='text' />
-                            <MDBBtn disabled={selectedValue === 'Active'} className='mt-3'>capture</MDBBtn>
+                            <MDBBtn disabled={selectedValue === 'Active' || selectedValue === 'Not Selected'} className='mt-3'>capture</MDBBtn>
                         </MDBCardBody>
                         </MDBCard>
                     </MDBCol>
@@ -106,7 +106,7 @@ const Admin_Dashboard = () => {
                             <MDBCardText>
                                 This will Enable only for Configure mode
                             </MDBCardText>
-                            <MDBBtn disabled={selectedValue === 'Active'} className='mt-3'>Capture</MDBBtn>
+                            <MDBBtn disabled={selectedValue === 'Active' || selectedValue === 'Not Selected'} className='mt-3'>Capture</MDBBtn>
                         </MDBCardBody>
                         </MDBCard>
                     </MDBCol>
@@ -117,7 +117,7 @@ const Admin_Dashboard = () => {
                             <MDBCardText>
                                 This will Enable only for Configure mode
                             </MDBCardText>
-                            <MDBBtn disabled={selectedValue === 'Active'} className='mt-3'>Capture</MDBBtn>
+                            <MDBBtn disabled={selectedValue === 'Active' || selectedValue === 'Not Selected'} className='mt-3'>Capture</MDBBtn>
                         </MDBCardBody>
                         </MDBCard>
                     </MDBCol>
