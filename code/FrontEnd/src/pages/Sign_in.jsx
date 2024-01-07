@@ -12,6 +12,7 @@ import loginimage from '../assets/facerecog.png';
 import { useNavigate} from 'react-router-dom';
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import backgroundImg from '../assets/background.jpg'; 
 
 
 function Signin() {
@@ -51,7 +52,20 @@ function Signin() {
 
 
   return (
-    <MDBContainer className="my-5 gradient-form" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', margin: '0 auto', maxWidth: '50%'}}>
+    <div
+    style={{
+      backgroundImage: `url(${backgroundImg})`,
+      backgroundSize: 'cover',
+      minHeight: '100vh', 
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
+    <MDBContainer className="my-5 gradient-form" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', margin: '0 auto', maxWidth: '50%',backgroundColor: 'rgba(0,0,0, 0.2)',borderRadius: '15px',transition: 'transform 0.3s ease-in-out', 
+        ':hover': {
+          transform: 'scale(1.2)',
+        },  }}>
 
           <div className="d-flex flex-column ms-4 me-4 mt-4 mb-4">
 
@@ -90,7 +104,7 @@ function Signin() {
 
         </MDBContainer>
       
-        
+        </div>
       
       );
     }
