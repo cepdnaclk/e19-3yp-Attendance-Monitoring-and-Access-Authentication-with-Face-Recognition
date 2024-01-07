@@ -51,7 +51,7 @@ function Signin() {
 
 
   return (
-    <MDBContainer className="my-5 gradient-form" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)'}}>
+    <MDBContainer className="my-5 gradient-form" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', margin: '0 auto', maxWidth: '50%'}}>
 
           <div className="d-flex flex-column ms-4 me-4 mt-4 mb-4">
 
@@ -89,6 +89,9 @@ function Signin() {
           </div>
 
         </MDBContainer>
+      
+        
+      
       );
     }
 
