@@ -1,8 +1,15 @@
 import React from 'react';
 import { MDBNavbar } from 'mdb-react-ui-kit';
 import '../css/signin.css';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+    navigate('/');
+  };
+
   return (
     <MDBNavbar expand="lg" light bgColor="body-tertiary" className="gradient-custom-2">
       {/* Container wrapper */}
@@ -21,7 +28,7 @@ const Navbar = () => {
           {/* Left links */}
 
           <div className="d-flex align-items-center">
-            <button style={{color:"black"}} className="btn btn-link px-3 me-2">
+            <button style={{color:"black"}} className="btn btn-link px-3 me-2" onClick={handleLogout}>
               Logout
             </button>
           </div>
