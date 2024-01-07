@@ -20,26 +20,55 @@ function Signin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const adminAuthentication = async() => {
+    const user = {
+      username: email,
+      password: password
+     };
+
+     // Create the POST requuest
+     const {data} = await                                                                            
+     axios.post('http://localhost:8000/token/',
+     user ,{
+       headers: {'Content-Type': 'application/json'},
+       withCredentials: true
+     });
+
+     // Initialize the access & refresh token in localstorage.      
+     localStorage.clear();
+     localStorage.setItem('access_token', data.access);
+     localStorage.setItem('refresh_token', data.refresh);
+     axios.defaults.headers.common['Authorization'] = 
+                                     `Bearer ${data['access']}`;
+     //window.location.href = '/'
+     navigate('/admin');
+  }
   const handleSignin = (e) => {
     e.preventDefault();  // Prevent the default behaviour of the form submit button(reload the page)
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in 
-      
-      console.log(userCredential);
-      const email = userCredential.user.email;
-      if (userCredential.user.email == "admin@gmail.com") {
-        navigate('/admin'); // Use the push method to navigate to the admin page
-      }
-      else{
-        navigate('/user' , { state: { email: email } }); // Use the push method to navigate to the user page
-      }
-      // ...
-    }).catch((error) => {
-      //const errorCode = error.code;
-      //const errorMessage = error.message;
-      console.log(error);
-    });
+    if (email == "username"){
+        adminAuthentication()
+    }
+    else{
+      signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        
+        console.log(userCredential);
+        const email = userCredential.user.email;
+        if (userCredential.user.email == "admin@gmail.com") {
+          navigate('/admin'); // Use the push method to navigate to the admin page
+        }
+        else{
+          navigate('/user' , { state: { email: email } }); // Use the push method to navigate to the user page
+        }
+        // ...
+      }).catch((error) => {
+        alert("Invalid Credentials")
+        //const errorCode = error.code;
+        //const errorMessage = error.message;
+        console.log(error);
+      });
+    }
   }
 
   
