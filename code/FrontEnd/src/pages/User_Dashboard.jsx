@@ -3,6 +3,13 @@ import { useLocation } from 'react-router-dom';
 import '../css/User_Dashboard.css';
 
 const User_Dashboard = () => {
+  const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem('access_token') !== null) {
+       setIsAuth(true); 
+     }
+   }, [isAuth]);
   const getDaysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
 
   const AttendanceDaysCard = () => {

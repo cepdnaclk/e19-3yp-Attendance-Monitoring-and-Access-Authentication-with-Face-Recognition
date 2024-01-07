@@ -9,21 +9,30 @@ import { MDBCard,
     MDBBtn,
     MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem,MDBRadio, MDBInput } from 'mdb-react-ui-kit';
 import Navbar from '../component/navbar';
+import { useNavigate} from 'react-router-dom';
 
 const Admin_Dashboard = () => {
+    const navigate = useNavigate(); // Initialize the useNavigate hook
     const [selectedValue, setSelectedValue] = useState('Not Selected');
     const [isAuth, setIsAuth] = useState(false);
 
     useEffect(() => {
         if (localStorage.getItem('access_token') !== null) {
            setIsAuth(true); 
-         }
+        }
+        else{
+            navigate('/');
+        }
        }, [isAuth]);
-       
+
     const handleDropdownSelect = (value) => {
         setSelectedValue(value);
     };
 
+    if (!isAuth) {
+        return null;
+    }
+    
 
   return (
     <div>
