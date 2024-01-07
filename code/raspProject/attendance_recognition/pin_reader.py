@@ -23,29 +23,69 @@ GPIO.setup(ROW_2, GPIO.OUT)
 GPIO.setup(ROW_3, GPIO.OUT)
 GPIO.setup(ROW_4, GPIO.OUT)
 
-# Set column pins as input and Pulled up high by default
+# Set column pins as input and pulled up high by default
 GPIO.setup(COL_1, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(COL_2, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(COL_3, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(COL_4, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-# Function to read each row and each column
-def read_row(line, characters):
-    GPIO.output(line, GPIO.LOW)
-    pressed_keys = [GPIO.input(col) == GPIO.LOW for col in [COL_1, COL_2, COL_3, COL_4]]
-    GPIO.output(line, GPIO.HIGH)
-    return [char for char, pressed in zip(characters, pressed_keys) if pressed]
 
-# Function to get a 4-digit PIN from the keypad
-def get_pin_from_keypad():
-    pin = []
+# Function to read each row and each column
+def readRow(line, characters, sum_value, output):
+    GPIO.output(line, GPIO.LOW)
+
+    if GPIO.input(COL_1) == GPIO.LOW:
+        sum_value = sum_value * 10 + try_int(characters[0], sum_value)
+        time.sleep(0.4)
+        return sum_value, output
+
+    elif GPIO.input(COL_2) == GPIO.LOW:
+        sum_value = sum_value * 10 + try_int(characters[1], sum_value)
+        time.sleep(0.4)
+        return sum_value, output
+
+    elif GPIO.input(COL_3) == GPIO.LOW:
+        if characters[2] == "#":
+            output = 1
+            time.sleep(0.4)
+            return sum_value, output
+        else:
+            sum_value = sum_value * 10 + try_int(characters[2], sum_value)
+            time.sleep(0.4)
+            return sum_value, output
+
+    elif GPIO.input(COL_4) == GPIO.LOW:
+        sum_value = sum_value * 10 + try_int(characters[3], sum_value)
+        time.sleep(0.4)
+        return sum_value, output
+
+    GPIO.output(line, GPIO.HIGH)
+    return sum_value, output
+
+
+def try_int(value, default):
     try:
-        while len(pin) < 4:
-            pin += read_row(ROW_1, ["1", "2", "3", "A"]) + read_row(ROW_2, ["4", "5", "6", "B"]) + \
-                   read_row(ROW_3, ["7", "8", "9", "C"]) + read_row(ROW_4, ["*", "0", "#", "D"])
-            time.sleep(0.2)  # Adjust this per your own setup
+        return int(value)
+    except ValueError:
+        return default
+
+
+# Endless loop by checking each row
+def get_pin():
+    try:
+        sum_value = 0
+        output = 0
+        while True:
+            sum_value, output = readRow(ROW_1, ["1", "2", "3", "A"], sum_value, output)
+            sum_value, output = readRow(ROW_2, ["4", "5", "6", "B"], sum_value, output)
+            sum_value, output = readRow(ROW_3, ["7", "8", "9", "C"], sum_value, output)
+            sum_value, output = readRow(ROW_4, ["*", "0", "#", "D"], sum_value, output)
+            if output == 1:
+                temp = sum_value
+                sum_value = 0
+                output = 0
+                return temp
+            time.sleep(0.2)  # adjust this per your own setup
     except KeyboardInterrupt:
         print("\nKeypad Application Interrupted!")
-    finally:
         GPIO.cleanup()
-    return ''.join(pin[:4])

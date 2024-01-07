@@ -1,7 +1,6 @@
 import json
 import subprocess
 
-
 script_path_encode = "face_detection/encode_faces.py"
 script_path_recognize = "face_detection/recognize_faces_image.py"
 
@@ -33,16 +32,8 @@ def encode_faces():
 
 
 def recognize_faces():
+    print("[INFO] loading encodings...")
+    print("[INFO] recognizing faces...")
     output = subprocess.check_output(recognize_command, text=True)
-    try:
-        result = json.loads(output)
-        recognized_name = result.get("Recognized")
-        if recognized_name:
-            print(f"Recognized face name: {recognized_name}")
-            return recognized_name
-        else:
-            print("No face recognized.")
-            return None
-    except json.JSONDecodeError as e:
-        print(f"Error decoding JSON output: {e}")
-        print("Recognition may have failed.")
+
+    return output
