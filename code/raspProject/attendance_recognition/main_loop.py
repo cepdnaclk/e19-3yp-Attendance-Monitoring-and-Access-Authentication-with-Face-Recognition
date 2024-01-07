@@ -1,16 +1,14 @@
 from gpiozero import MotionSensor
-from attendance_recognition import capture_face, fingerprint_reader, pin_reader
-from mqtt_communication import publish_msg
-import os
+from attendance_recognition import unlock_logic
 import time
 
 pir = MotionSensor(4)
-#security_level = os.environ['SECURITY_LEVEL']
 
 
 def motion_detector():
     if pir.motion_detected:
         print("Motion Detected")
+        unlock_logic.unlock_logic()
         time.sleep(1)
 
     else:
