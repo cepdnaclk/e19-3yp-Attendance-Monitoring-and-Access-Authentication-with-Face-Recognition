@@ -52,8 +52,11 @@ function Signin() {
       signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
-        
         console.log(userCredential);
+
+        localStorage.clear();
+        localStorage.setItem('access_token', userCredential._tokenResponse.idToken);
+        localStorage.setItem('refresh_token', userCredential._tokenResponse.refreshToken);
         const email = userCredential.user.email;
         if (userCredential.user.email == "admin@gmail.com") {
           navigate('/admin'); // Use the push method to navigate to the admin page
