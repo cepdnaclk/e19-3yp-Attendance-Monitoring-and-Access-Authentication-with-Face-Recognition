@@ -5,6 +5,18 @@ from config_logic import make_folder
 from face_detection import capture_face
 from attendance_recognition import fingerprint_reader,pin_reader
 from mqtt_communication import publish_msg
+from cryptography.fernet import Fernet
+
+key = Fernet.generate_key()
+key_str = key.decode('utf-8')
+os.environ["KEY"] = key_str
+cipher_suite = Fernet(key)
+
+
+def encrypt_pin(pin_code):
+    # Encrypt the PIN code
+    encrypted_pin = cipher_suite.encrypt(pin_code.encode())
+    return encrypted_pin
 
 
 def json_decorator(msg):
@@ -20,7 +32,7 @@ def json_decorator(msg):
             if json_payload.get("cmd", "").lower() == "change_level":
                 print("Changing Security Level to", json_payload.get("sl", "").lower())
                 os.environ["SECURITY_LEVEL"] = json_payload.get("sl", "").lower()
-                # print("Security Level (changed):", os.environ["SECURITY_LEVEL"])
+                print("Security Level (changed):", os.environ["SECURITY_LEVEL"])
 
             if json_payload.get("cmd", "").lower() == "update_device":
                 print("Running Device Database Update...")
@@ -81,8 +93,23 @@ def json_decorator(msg):
 
             if json_payload.get("cmd", "").lower() == "capture_pin":
                 print("Getting Ready for capturing PIN...")
-                pin_code = pin_reader.get_pin_from_keypad()
-                print(pin_code)
+                emp_id = json_payload.get("id", "")
+                try:
+                    pin_code = pin_reader.get_pin()
+                    en_pin = encrypt_pin(pin_code)
+                    print(en_pin)
+
+                    msg = {
+                        "mode": "configure",
+                        "id": emp_id,
+                        "name": json_payload.get("name", ""),
+                        "cmd": "pin_successful",
+                        "pin": en_pin
+                    }
+                    publish_msg.run(msg)
+
+                except Exception as e:
+                    print(e)
 
     except json.JSONDecodeError as e:
         print(f"Error decoding JSON: {e}")
