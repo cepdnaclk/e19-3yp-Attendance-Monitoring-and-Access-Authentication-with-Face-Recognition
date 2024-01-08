@@ -104,6 +104,6 @@ May receive real-time notifications about attendance events.
 | LCD Touch Screen            |         1        |      13,850          |              13,850                             |
 | PIR Sensor Module           |         1        |         250          |                 250                             |
 | Jumper Wires                |        20        |          10          |                 200                             |
-|Total Cost                                                             |              46,170                             |
+|Total Cost                   |                  |                      |              46,170                             |
 
 ## 6.Extendibility & Scalability
