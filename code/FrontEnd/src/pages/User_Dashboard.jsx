@@ -121,7 +121,7 @@ const User_Dashboard = () => {
         backgroundSize: 'cover',
         minHeight: '100vh', 
       }}>
-      <h1>This is {email} Dashboard</h1>
+      <h1 className='mt-2 text-center mb-3'>User {email}</h1>
       <div className='row'>
         <div className="col-md-6"  >
             <CalendarAndClockCard />
