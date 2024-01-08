@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../css/User_Dashboard.css';
+import backgroundImg from '../assets/background.jpg'; 
 
 const User_Dashboard = () => {
-  const [isAuth, setIsAuth] = useState(false);
-
-  useEffect(() => {
-    if (localStorage.getItem('access_token') !== null) {
-       setIsAuth(true); 
-     }
-   }, [isAuth]);
   const getDaysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
 
   const AttendanceDaysCard = () => {
@@ -33,7 +27,7 @@ const User_Dashboard = () => {
     });
 
     return (
-      <div className="card AttendanceDaysCard" style={{height: '200px' }}>
+      <div className="card AttendanceDaysCard" style={{height: '200px' ,backgroundColor: 'rgba(15, 33, 103, 0.3)', color: 'rgba(0,0,0,1)' }}>
         <div className="card-body">
           <h5 className="card-title">Attendance Days</h5>
           <p className="card-text">
@@ -60,7 +54,7 @@ const User_Dashboard = () => {
     const formattedTime = currentDateTime.toLocaleTimeString();
   
     return (
-      <div className="card CalendarAndClockCard" style={{ height: '200px' }}>
+      <div className="card CalendarAndClockCard" style={{ height: '200px',backgroundColor: 'rgba(15, 33, 103, 0.3)', color: 'rgba(0,0,0,1)'  }}>
         <div className="card-body">
           <h5 className="card-title">Calendar and Digital Clock</h5>
           <div className="calendar">
@@ -105,7 +99,7 @@ const User_Dashboard = () => {
     }
 
     return (
-      <div className="card TodayAttendanceCard" style={{height: '200px' }}>
+      <div className="card TodayAttendanceCard" style={{height: '200px',backgroundColor: 'rgba(15, 33, 103, 0.3)', color: 'rgba(0,0,0,1)' }}>
         <div className="card-body">
           <h5 className="card-title">Today's Attendance</h5>
           <p className="card-text">
@@ -122,7 +116,11 @@ const User_Dashboard = () => {
   const email = location.state && location.state.email;
 
   return (
-    <div>
+    <div style={{
+        backgroundImage: `url(${backgroundImg})`,
+        backgroundSize: 'cover',
+        minHeight: '100vh', 
+      }}>
       <h1>This is {email} Dashboard</h1>
       <div className='row'>
         <div className="col-md-6"  >
@@ -133,9 +131,12 @@ const User_Dashboard = () => {
         </div>
       </div>
 
+      <div className='row'>
+      <div className='col-md-6'>
       <TodayAttendanceCard />
-      
-      <div className="card">
+      </div>
+      <div className='col-md-6'>
+      <div className="card" style={{backgroundColor: 'rgba(15, 33, 103, 0.3)', color: 'rgba(0,0,0,1)'}}>
         <div className="card-body">
           <h5 className="card-title">Employee Details</h5>
           <p className="card-text">
@@ -144,8 +145,11 @@ const User_Dashboard = () => {
             <strong>Department:</strong> Marketing<br />
             <strong>Position:</strong> Senior Marketing Analyst
           </p>
-          <button type="button" className="btn btn-primary">View Attendance</button>
+          
         </div>
+      </div>
+      </div>
+      
       </div>
       
     </div>
