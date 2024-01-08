@@ -94,4 +94,14 @@ May receive real-time notifications about attendance events.
 
 ## 5.BOM
 
+|    Component                |       Quantity​   |     Unit Price (LKR)​ | Cost (LKR)​                                      |
+| ----------------------------| ---------------- | -------------------- | ----------------------------------------------- |
+| Raspberry Pi​ 3 Board        |         1        |      21,650          |              21,650                             |
+| Rasberry Pi Camera Module​ 3 |         1        |       1,370          |               1,370                             | 
+| R307 Fingerprint Sensor​     |         1        |       3,600          |               3,600                             |
+| Keypad​                      |         1        |         150          |                 150                             |
+| Solenoid door lock          |         1        |       1,240          |               1,240                             |
+
+
+
 ## 6.Extendibility & Scalability
