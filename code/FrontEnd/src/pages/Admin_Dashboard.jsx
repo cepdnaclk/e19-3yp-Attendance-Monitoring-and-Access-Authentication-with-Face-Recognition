@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MDBCard,
     MDBContainer,
     MDBCardBody,
@@ -9,21 +9,40 @@ import { MDBCard,
     MDBBtn,
     MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem,MDBRadio, MDBInput } from 'mdb-react-ui-kit';
 import Navbar from '../component/navbar';
+import { useNavigate} from 'react-router-dom';
 import backgroundImg from '../assets/background.jpg'; 
 
 const Admin_Dashboard = () => {
+    const navigate = useNavigate(); // Initialize the useNavigate hook
     const [selectedValue, setSelectedValue] = useState('Not Selected');
+    const [isAuth, setIsAuth] = useState(false);
+
+    useEffect(() => {
+        if (localStorage.getItem('access_token') !== null) {
+           setIsAuth(true); 
+        }
+        else{
+            navigate('/');
+        }
+       }, [isAuth]);
+
     const handleDropdownSelect = (value) => {
         setSelectedValue(value);
     };
 
+    if (!isAuth) {
+        return null;
+    }
+    
 
   return (
-    <div style={{
+    <div
+    style={{
         backgroundImage: `url(${backgroundImg})`,
         backgroundSize: 'cover',
         minHeight: '100vh', 
-      }}>
+      }}
+    >
         <div style={{ width: '100%', marginLeft:0, top: 0, zIndex: 1000 }}>
             <Navbar />
         </div>
@@ -34,7 +53,7 @@ const Admin_Dashboard = () => {
             <MDBContainer className='mb-5'>
                 <MDBRow>
                     <MDBCol sm='6'>
-                        <MDBCard className="card">
+                        <MDBCard>
                         <MDBCardBody>
                             <MDBCardTitle className="text-danger">Mode Selection</MDBCardTitle>
                                 <div>
@@ -64,7 +83,7 @@ const Admin_Dashboard = () => {
                         </MDBCard>
                     </MDBCol>
                     <MDBCol sm='6'>
-                        <MDBCard className="card">
+                        <MDBCard>
                         <MDBCardBody>
                             <MDBCardTitle className="text-danger">NOTE</MDBCardTitle>
                             <p>
@@ -93,7 +112,7 @@ const Admin_Dashboard = () => {
             <MDBContainer>
                 <MDBRow>
                     <MDBCol sm='4'>
-                        <MDBCard className="card">
+                        <MDBCard>
                         <MDBCardBody>
                             <MDBCardTitle className="text-danger">Image Capturing for New Employee</MDBCardTitle>
                             <MDBCardText>
@@ -105,7 +124,7 @@ const Admin_Dashboard = () => {
                         </MDBCard>
                     </MDBCol>
                     <MDBCol sm='4'>
-                        <MDBCard className="card">
+                        <MDBCard>
                         <MDBCardBody>
                             <MDBCardTitle className="text-danger">Take Finger Print from New Employee</MDBCardTitle>
                             <MDBCardText>
@@ -116,7 +135,7 @@ const Admin_Dashboard = () => {
                         </MDBCard>
                     </MDBCol>
                     <MDBCol sm='4'>
-                        <MDBCard className="card">
+                        <MDBCard>
                         <MDBCardBody>
                             <MDBCardTitle className="text-danger">Capture Pin from new Employee</MDBCardTitle>
                             <MDBCardText>
