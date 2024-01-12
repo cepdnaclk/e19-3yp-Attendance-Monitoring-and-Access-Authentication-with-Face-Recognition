@@ -1,4 +1,7 @@
+import os
+
 from django.db import models
+#from encrypted_fields import EncryptedIntegerField
 
 
 class Employee(models.Model):
@@ -8,31 +11,11 @@ class Employee(models.Model):
     gender = models.CharField(max_length=10, choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], default='M')
     age = models.IntegerField()
     contact_address = models.CharField(max_length=200)
-    pin_code = models.IntegerField(null=False, default=1234)
     emp_email = models.EmailField(null=False)
     emp_password = models.CharField(max_length=200, null=False)
 
     def __str__(self):
         return str(self.emp_id) + self.first_name + self.last_name
-
-
-class Topic(models.Model):
-    topic_id = models.AutoField(primary_key=True)
-    topic_name = models.CharField(max_length=50)
-    dev_connected = models.IntegerField()
-
-    def __str__(self):
-        return str(self.topic_id) + self.topic_name
-
-
-class Department(models.Model):
-    dep_id = models.AutoField(primary_key=True)
-    dep_name = models.CharField(max_length=100)
-    topic_id = models.ForeignKey(Topic, on_delete=models.CASCADE)
-    no_emp = models.IntegerField()
-
-    def __str__(self):
-        return str(self.dep_id) + self.dep_name
 
 
 class Attendance_Details(models.Model):
@@ -41,29 +24,9 @@ class Attendance_Details(models.Model):
     date = models.DateField()
     present = models.BooleanField()
     in_time = models.TimeField(null=True)
-    out_time = models.TimeField(null=True)
 
     def __str__(self):
         return str(self.attendance_id)
-
-
-class Job_Title(models.Model):
-    job_id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=100)
-    dep_id = models.ForeignKey(Department, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return str(self.job_id) + self.title
-
-
-class Duty_Duration(models.Model):
-    duty_id = models.AutoField(primary_key=True)
-    emp_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    job_id = models.ForeignKey(Job_Title, on_delete=models.CASCADE)
-    duration = models.IntegerField()
-
-    def __str__(self):
-        return str(self.duty_id)
 
 
 class Security_Log(models.Model):
@@ -72,3 +35,28 @@ class Security_Log(models.Model):
     fp_status = models.CharField(max_length=100)
     pin_status = models.CharField(max_length=100)
     lock_status = models.CharField(max_length=100)
+
+
+class Pin_Data(models.Model):
+    pin_id = models.AutoField(primary_key=True)
+    emp_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    pin_code = models.IntegerField()
+
+
+class Fingerprint_Data(models.Model):
+    pin_id = models.AutoField(primary_key=True)
+    emp_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    fp = models.ImageField()
+
+
+def upload_to(instance, filename):
+    emp_id_folder = str(instance.emp_id.emp_id)
+    count = Face_Data.objects.filter(emp_id=instance.emp_id).count() + 1
+    filename = f"{count:03d}.jpg"
+    return os.path.join('datasets', emp_id_folder, filename)
+
+
+class Face_Data(models.Model):
+    pin_id = models.AutoField(primary_key=True)
+    emp_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    face = models.ImageField(upload_to=upload_to, null=True, blank=True)
