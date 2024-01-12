@@ -12,29 +12,69 @@ import loginimage from '../assets/facerecog.png';
 import { useNavigate} from 'react-router-dom';
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import backgroundImg from '../assets/background.jpg'; 
 
 
 function Signin() {
-
+  const navigate = useNavigate(); // Initialize the useNavigate hook
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const adminAuthentication = async() => {
+    const user = {
+      username: email,
+      password: password
+     };
+
+     // Create the POST requuest
+     const {data} = await                                                                            
+     axios.post('http://localhost:8000/token/',
+     user ,{
+       headers: {'Content-Type': 'application/json'},
+       withCredentials: true
+     });
+
+     // Initialize the access & refresh token in localstorage.      
+     localStorage.clear();
+     localStorage.setItem('access_token', data.access);
+     localStorage.setItem('refresh_token', data.refresh);
+     axios.defaults.headers.common['Authorization'] = 
+                                     `Bearer ${data['access']}`;
+     //window.location.href = '/'
+     navigate('/admin');
+  }
   const handleSignin = (e) => {
     e.preventDefault();  // Prevent the default behaviour of the form submit button(reload the page)
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in 
-      
-      console.log(userCredential);
-      // ...
-    }).catch((error) => {
-      //const errorCode = error.code;
-      //const errorMessage = error.message;
-      console.log(error);
-    });
+    if (email == "username"){
+        adminAuthentication()
+    }
+    else{
+      signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        console.log(userCredential);
+
+        localStorage.clear();
+        localStorage.setItem('access_token', userCredential._tokenResponse.idToken);
+        localStorage.setItem('refresh_token', userCredential._tokenResponse.refreshToken);
+        const email = userCredential.user.email;
+        if (userCredential.user.email == "admin@gmail.com") {
+          navigate('/admin'); // Use the push method to navigate to the admin page
+        }
+        else{
+          navigate('/user' , { state: { email: email } }); // Use the push method to navigate to the user page
+        }
+        // ...
+      }).catch((error) => {
+        alert("Invalid Credentials")
+        //const errorCode = error.code;
+        //const errorMessage = error.message;
+        console.log(error);
+      });
+    }
   }
 
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+  
 
   const handleSignUpClick = () => {
     
@@ -44,7 +84,20 @@ function Signin() {
 
 
   return (
-    <MDBContainer className="my-5 gradient-form" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)'}}>
+    <div
+    style={{
+      backgroundImage: `url(${backgroundImg})`,
+      backgroundSize: 'cover',
+      minHeight: '100vh', 
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
+    <MDBContainer className="my-5 gradient-form" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', margin: '0 auto', maxWidth: '50%',backgroundColor: 'rgba(0,0,0, 0.2)',borderRadius: '15px',transition: 'transform 0.3s ease-in-out', 
+        ':hover': {
+          transform: 'scale(1.2)',
+        },  }}>
 
           <div className="d-flex flex-column ms-4 me-4 mt-4 mb-4">
 
@@ -82,6 +135,9 @@ function Signin() {
           </div>
 
         </MDBContainer>
+      
+        </div>
+      
       );
     }
 

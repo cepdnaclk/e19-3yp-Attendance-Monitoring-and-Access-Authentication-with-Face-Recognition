@@ -34,7 +34,8 @@ title: Attendance Monitoring and Access Authentication with Face Recognition
 4. [Infrastructure](#infrastructure)
 5. [BOM](#bom)
 6. [Extendibility & Scalability](#extendibility)
-7. [Links](#links)
+7. [Testing](#testing)
+8. [Links](#links)
 
 ## 1.Problem Overview
 Deficiencies of Manual Attendance Management System​
@@ -103,8 +104,8 @@ May receive real-time notifications about attendance events.
 
 ## Links
 
-- [Project Repository]( page.repository-name }}){:target="_blank"}
-- [Project Page]( page.repository-name }}){:target="_blank"}
+- [Project Repository](https://github.com/cepdnaclk/e19-3yp-Attendance-Monitoring-and-Access-Authentication-with-Face-Recognition/{{ page.repository-name }}){:target="_blank"}
+- [Project Page](https://cepdnaclk.github.io/{{ page.repository-name}}){:target="_blank"}
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
 

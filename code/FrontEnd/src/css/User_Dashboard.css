@@ -1,0 +1,44 @@
+/* UserDashboard.css */
+.user-dashboard {
+  padding: 20px; /* Add some padding around the content */
+}
+
+.card {
+  margin-top: 40px;
+  margin-bottom: 20px; /* Add spacing between the cards */
+  margin-left: 20px; /* Add spacing between the cards */
+  margin-right: 20px; /* Add spacing between the cards */
+  font-size: 16px; /* Adjust the font size for all cards */
+  background-color:'rgba(15, 33, 103, 0.3)' 
+  color: #ffffff;
+}
+
+.AttendanceDaysCard {
+  font-size: 30px; 
+}
+
+.CalanderAndClockCard {
+  font-size: 50px; 
+}
+
+.TodayAttendanceCard {
+  font-size: 40px;
+  background-color:'rgba(15, 33, 103, 0.3)';
+}
+
+
+.employee-details {
+  font-size: 25px;
+  height: 400px; /* Adjust the font size for the employee details card */
+}
+
+.btn-primary {
+  font-size: 14px; /* Adjust the font size for the button */
+}
+
+.today-attendance-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
