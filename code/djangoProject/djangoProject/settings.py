@@ -78,10 +78,19 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'attendance_management_system',
+        'USER': 'attendance_management_system_user',
+        'PASSWORD': 'Yuewv7XeXtN9Cwb0SaNziAojSL51IWgW',
+        'HOST': 'dpg-cmfbus6d3nmc73dq7dog-a.oregon-postgres.render.com',
+        'PORT': '5432',
     }
+
 }
 
 # Password validation
@@ -139,18 +148,13 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
      'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
-     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+     'REFRESH_TOKEN_LIFETIME': timedelta(hours=5),
      'ROTATE_REFRESH_TOKENS': True,
      'BLACKLIST_AFTER_ROTATION': True
 }
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-]
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-# MQTT Settings
-MQTT_SERVER = 'i5363520.ala.us-east-1.emqxsl.com'
-MQTT_PORT = 8883
-MQTT_KEEPALIVE = 60
-MQTT_USER = 'spincoders'
-MQTT_PASSWORD = 'spincoders123'
+# Define the media root and URL
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "/media/"
