@@ -86,8 +86,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'attendance_management_system',
         'USER': 'attendance_management_system_user',
-        'PASSWORD': 'Yuewv7XeXtN9Cwb0SaNziAojSL51IWgW',
-        'HOST': 'dpg-cmfbus6d3nmc73dq7dog-a.oregon-postgres.render.com',
+        'PASSWORD': '', # Password
+        'HOST': '', # Hostname
         'PORT': '5432',
     }
 
