@@ -5,6 +5,7 @@ import Signin from './pages/Sign_in.jsx';
 import Signup from './pages/Sign_up.jsx';
 import Admin_Dashboard from './pages/Admin_Dashboard.jsx';
 import User_Dashboard from './pages/User_Dashboard.jsx';
+import './interceptor/axiox.js';
 
 function App() {
   const [count, setCount] = useState(0)

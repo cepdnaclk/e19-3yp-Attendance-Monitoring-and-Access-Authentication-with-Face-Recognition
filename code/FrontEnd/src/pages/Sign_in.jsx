@@ -13,13 +13,14 @@ import { useNavigate} from 'react-router-dom';
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import backgroundImg from '../assets/background.jpg'; 
-
+import axios from "axios";
 
 function Signin() {
   const navigate = useNavigate(); // Initialize the useNavigate hook
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // hadle authentication from django backend token
   const adminAuthentication = async() => {
     const user = {
       username: email,
@@ -28,12 +29,13 @@ function Signin() {
 
      // Create the POST requuest
      const {data} = await                                                                            
-     axios.post('http://localhost:8000/token/',
+     axios.post('https://face-secure.azurewebsites.net/token/',
      user ,{
        headers: {'Content-Type': 'application/json'},
-       withCredentials: true
+       withCredentials: true,
      });
 
+      console.log('Response:', data); // Log the response
      // Initialize the access & refresh token in localstorage.      
      localStorage.clear();
      localStorage.setItem('access_token', data.access);
@@ -45,7 +47,7 @@ function Signin() {
   }
   const handleSignin = (e) => {
     e.preventDefault();  // Prevent the default behaviour of the form submit button(reload the page)
-    if (email == "username"){
+    if (email == "aselahemantha"){
         adminAuthentication()
     }
     else{
