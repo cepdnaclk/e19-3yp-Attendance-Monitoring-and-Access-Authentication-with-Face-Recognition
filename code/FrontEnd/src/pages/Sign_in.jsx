@@ -20,6 +20,7 @@ function Signin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // hadle authentication from django backend token
   const adminAuthentication = async() => {
     const user = {
       username: email,

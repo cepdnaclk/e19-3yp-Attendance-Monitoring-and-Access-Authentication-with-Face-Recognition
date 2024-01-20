@@ -1,15 +1,34 @@
+// Don't use this navbar for client component. superuser logout component mounted here.
 import React from 'react';
 import { MDBNavbar } from 'mdb-react-ui-kit';
 import '../css/signin.css';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const Navbar = () => {
     const navigate = useNavigate();
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+      try {
+        const response = await axios.post(
+          'http://127.0.0.1:8000/attendanceManagement/logout/',
+          {
+            refresh_token: localStorage.getItem('refresh_token'),
+          },
+          {
+            headers: {'Content-Type': 'application/json'},
+            withCredentials: true,
+          }
+        );
+        
+        console.log('Response:', response); // Log the response
         localStorage.clear();
+        axios.defaults.headers.common['Authorization'] = null;
         navigate('/');
-  };
+      } catch (e) {
+        console.log('Logout not working', e);
+      }
+    };
 
   return (
     <MDBNavbar expand="lg" light bgColor="body-tertiary" className="gradient-custom-2">
