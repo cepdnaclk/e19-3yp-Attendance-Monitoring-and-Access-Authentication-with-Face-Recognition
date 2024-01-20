@@ -11,7 +11,7 @@ const Navbar = () => {
     const handleLogout = async () => {
       try {
         const response = await axios.post(
-          'http://127.0.0.1:8000/attendanceManagement/logout/',
+          'https://face-secure.azurewebsites.net/attendanceManagement/logout/',
           {
             refresh_token: localStorage.getItem('refresh_token'),
           },
