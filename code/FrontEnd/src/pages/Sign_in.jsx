@@ -7,7 +7,7 @@ import {
   MDBInput
 }
 from 'mdb-react-ui-kit';
-import '../css/signin.css';
+import '../css/Signin.css';
 import loginimage from '../assets/facerecog.png';
 import { useNavigate} from 'react-router-dom';
 import { auth } from '../firebase';
@@ -32,7 +32,7 @@ function Signin() {
      axios.post('https://face-secure.azurewebsites.net/token/',
      user ,{
        headers: {'Content-Type': 'application/json'},
-       withCredentials: true,
+       withCredentials: false,
      });
 
       console.log('Response:', data); // Log the response
