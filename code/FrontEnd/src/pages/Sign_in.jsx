@@ -50,6 +50,7 @@ function Signin() {
     if (email == "aselahemantha"){
         adminAuthentication()
     }
+    // This is for user login
     else{
       signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -60,17 +61,13 @@ function Signin() {
         localStorage.setItem('access_token', userCredential._tokenResponse.idToken);
         localStorage.setItem('refresh_token', userCredential._tokenResponse.refreshToken);
         const email = userCredential.user.email;
-        if (userCredential.user.email == "admin@gmail.com") {
-          navigate('/admin'); // Use the push method to navigate to the admin page
-        }
-        else{
-          navigate('/user' , { state: { email: email } }); // Use the push method to navigate to the user page
-        }
-        // ...
+      
+        navigate('/user2' , { state: { email: email } }); // Use the push method to navigate to the user page
+        
+        
       }).catch((error) => {
         alert("Invalid Credentials")
-        //const errorCode = error.code;
-        //const errorMessage = error.message;
+      
         console.log(error);
       });
     }
