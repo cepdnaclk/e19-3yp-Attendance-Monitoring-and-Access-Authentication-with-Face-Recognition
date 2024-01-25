@@ -70,7 +70,7 @@ function Signup() {
               <h4 className="mt-1 mb-2 pb-1" >Attedance Management System</h4>
             </div>
 
-            <p>Please enter your details</p>
+            <p style={{fontSize:'20px'}}>Please enter your details</p>
 
 
             <MDBInput wrapperClass='mb-3' label='First name' id='form1' type='text'

@@ -106,17 +106,26 @@ function Signin() {
               <h4 className="mt-3 mb-3 pb-1" >Attedance Management System</h4>
             </div>
 
-            <p>Please login to your account</p>
+            <p style={{fontSize:'20px'}} >Please login to your account</p>
 
 
-            <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}/>
+            <MDBInput
+              wrapperClass='mb-4 custom-input-wrapper'  // Add a custom class for styling
+              label='Email address'
+              id='form1'
+              type='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-
-            <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}/>
+            <MDBInput
+              wrapperClass='mb-4 custom-input-wrapper'  // Add the same custom class for consistency
+              label='Password'
+              id='form2'
+              type='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
 
             <div className="text-center pt-1 mb-3 pb-1">
