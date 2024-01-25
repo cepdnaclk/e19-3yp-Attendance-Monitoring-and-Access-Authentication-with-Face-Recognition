@@ -13,6 +13,7 @@ import { useNavigate} from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import backgroundImg from '../assets/background.jpg'; 
+import axios from 'axios';
 
 
 function Signup() {
@@ -33,14 +34,54 @@ function Signup() {
     setGender(e.target.value);
   };  
   const handleDepartmentChange = (e) => {
-    setGender(e.target.value);
+    setDepname(e.target.value);
   };
+
+  const saveUserData = async (data) => {
+    try {
+      // Make a POST request with the constructed JSON object
+      const response = await axios.post('https://face-secure.azurewebsites.net/attendanceManagement/create_employee/', data, {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+  
+      // Handle the response as needed
+      console.log('Response:', response.data);
+      } catch (error) {
+      // Handle errors
+      console.error('Error:', error);
+      }
+  }
+
 
   const handleSignup = (e) => {
     e.preventDefault();  // Prevent the default behaviour of the form submit button(reload the page)
+
+    let data;
+    // password confirmpassword logic
+    if(password !== confirmpassword){
+      alert('pasword mismatch');
+      setPassword('');
+      setConfirmpassword('');
+      return;
+    }
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      // Signed in 
+      //save data in database
+      data = {
+        'firstName' : firstname,
+        'lastName' : lastname,
+        'gender' : gender,
+        'age' : age,
+        'number' : number,
+        'email' : email,
+        'departmentName' : depname,
+        'jobTitle' : job
+      };
+
+      saveUserData(data);
+      
       
       console.log(userCredential);
       navigate('/'); // Use the push method to navigate to the signin page
@@ -91,9 +132,9 @@ function Signup() {
             style={{ color: '#318CE7' }}
             onChange={(e) => setLastname(e.target.value)}/>
 
-           <div className="mb-3" style={{ color: '#318CE7' }}>
+           {/* <div className="mb-3" style={{ color: '#318CE7' }}> */}
                 {/* <label htmlFor="gender">Gender</label> */}
-                <select
+                {/* <select
                   id="form3"
                   className="form-select" 
                   value={gender}
@@ -104,11 +145,11 @@ function Signup() {
                   <option value="female">Female</option>
                   <option value="other">Other</option>
                 </select>
-              </div>
-            {/* <MDBInput wrapperClass='mb-3' label='Gender' id='form3' type='text'
+              </div> */}
+            <MDBInput wrapperClass='mb-3' label='Gender' id='form3' type='text'
             value={gender}
             style={{ color: '#318CE7' }}
-            onChange={(e) => setGender(e.target.value)}/> */}
+            onChange={(e) => setGender(e.target.value)}/>
 
 
             <MDBInput wrapperClass='mb-3' label='Age' id='form4' type='text'
@@ -135,25 +176,25 @@ function Signup() {
             style={{ color: '#318CE7' }}
             onChange={(e) => setConfirmpassword(e.target.value)}/>
 
-            <div className="mb-3" style={{ color: '#318CE7' }}>
+            {/* <div className="mb-3" style={{ color: '#318CE7' }}>
                 {/* <label htmlFor="gender">Gender</label> */}
-                <select
+                {/*<select
                   id="form3"
                   className="form-select" 
                   value={gender}
-                  onChange={handleGenderChange}
+                  onChange={handleDepartmentChange}
                 >
                   <option value="">Department</option>
                   <option value="male">A</option>
                   <option value="female">B</option>
                   <option value="other">C</option>
                 </select>
-              </div>
+              </div> */}
 
-            {/* <MDBInput wrapperClass='mb-3' label='Department name' id='form9' type='text'
+            <MDBInput wrapperClass='mb-3' label='Department name' id='form9' type='text'
             value={depname}
             style={{ color: '#318CE7' }}
-            onChange={(e) => setDepname(e.target.value)}/> */}
+            onChange={(e) => setDepname(e.target.value)}/>
 
             <MDBInput wrapperClass='mb-3' label='Job title' id='form10' type='text'
             value={job}
