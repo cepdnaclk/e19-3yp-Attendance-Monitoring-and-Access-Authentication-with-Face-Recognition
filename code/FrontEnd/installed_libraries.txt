@@ -1,2 +1,3 @@
 MDB - for styling purposes
 Font awesome - for icon
+ReactDatePicker
