@@ -28,7 +28,7 @@ function Signup() {
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmpassword] = useState('');
   const [depname, setDepname] = useState('');
-  const [job, setJob] = useState('');
+  const [address, setAddress] = useState('');
 
   const handleGenderChange = (e) => {
     setGender(e.target.value);
@@ -40,7 +40,7 @@ function Signup() {
   const saveUserData = async (data) => {
     try {
       // Make a POST request with the constructed JSON object
-      const response = await axios.post('https://face-secure.azurewebsites.net/attendanceManagement/create_employee/', data, {
+      const response = await axios.post('https://facesecure.azurewebsites.net/attendanceManagement/save-employee/', data, {
           headers: {
               'Content-Type': 'application/json',
           },
@@ -70,14 +70,16 @@ function Signup() {
     .then((userCredential) => {
       //save data in database
       data = {
-        'firstName' : firstname,
-        'lastName' : lastname,
+        'first_name' : firstname,
+        'last_name' : lastname,
         'gender' : gender,
-        'age' : age,
-        'number' : number,
-        'email' : email,
-        'departmentName' : depname,
-        'jobTitle' : job
+        'age' : parseInt(age),
+        'contact_address' : address,
+        'mobile_number' : number,
+        'emp_email' : email,
+        'department' : parseInt(depname),
+        'face_state' : false,
+        'fp_state' : false
       };
 
       saveUserData(data);
@@ -196,10 +198,10 @@ function Signup() {
             style={{ color: '#318CE7' }}
             onChange={(e) => setDepname(e.target.value)}/>
 
-            <MDBInput wrapperClass='mb-3' label='Job title' id='form10' type='text'
-            value={job}
+            <MDBInput wrapperClass='mb-3' label='Contact address' id='form10' type='text'
+            value={address}
             style={{ color: '#318CE7' }}
-            onChange={(e) => setJob(e.target.value)}/>
+            onChange={(e) => setAddress(e.target.value)}/>
 
             <div className="text-center pt-1 mb-3 pb-1">
               <MDBBtn className="mb-1 w-100 gradient-custom-2" onClick={handleSignup}>Sign up</MDBBtn>
