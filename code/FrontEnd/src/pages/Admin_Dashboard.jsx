@@ -17,10 +17,24 @@ const Admin_Dashboard = () => {
     const navigate = useNavigate(); // Initialize the useNavigate hook
     const [selectedValue, setSelectedValue] = useState('Not Configured');
     const [isAuth, setIsAuth] = useState(false);
-    const [securityLevel, setSecurityLevel] = useState('easy');
-    const [id, setId] = useState(0);
-    const [newEmployee, setNewEmployee] = useState(''); 
+    const [securityLevel, setSecurityLevel] = useState('level1');
+    const [employees, setEmployees] = useState([]);
+    const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
+    const [selectedEmployeeFirstName, setSelectedEmployeeFirstName] = useState('');
     
+    useEffect(() => {
+        // Fetch data from the endpoint when the component mounts
+        const fetchData = async () => {
+          try {
+            const response = await axios.get('https://facesecure.azurewebsites.net/attendanceManagement/get-no-face-employees/');
+            setEmployees(response.data.employees_without_face);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
+    
+        fetchData(); // Call the fetch function
+    }, []);
 
     useEffect(() => {
         if (localStorage.getItem('access_token') !== null) {
@@ -32,25 +46,22 @@ const Admin_Dashboard = () => {
        }, [isAuth]);
     
 
-    //generate a unique id for every new employee addition
-    const generateId = () => {
-        setId(prevId => {prevId+1})
-    }
+    const handleEmployeeSelect = (empId, firstName) => {
+    setSelectedEmployeeId(empId);
+    setSelectedEmployeeFirstName(firstName);
+    };
 
-    const handleNameChange = (event) => {
-        setNewEmployee(event.target.value);
-      };
 
     // trigger this when mode is active
     const onActiveMode = async () => {
         const activateData = {
-            "mode" : "activate",
-            "sl" : securityLevel
+            "mode" : "active",
+            "level" : securityLevel
         };
       
         try {
         // Make a POST request with the constructed JSON object
-        const response = await axios.post('https://face-secure.azurewebsites.net/attendanceManagement/active/', activateData, {
+        const response = await axios.post('https://facesecure.azurewebsites.net/attendanceManagement/active/', activateData, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
@@ -82,7 +93,7 @@ const Admin_Dashboard = () => {
     
         try {
           // Make a POST request with the constructed JSON object
-          const response = await axios.post('https://face-secure.azurewebsites.net/attendanceManagement/configure/', data, {
+          const response = await axios.post('https://facesecure.azurewebsites.net/attendanceManagement/configure/', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
@@ -101,7 +112,7 @@ const Admin_Dashboard = () => {
         const securityLevelData = {
             "mode" : "configure",
             "cmd" : "change_level",
-            "sl" : securityLevel
+            "level" : securityLevel
         };
 
         handleConfigurePostRequest(securityLevelData);
@@ -124,9 +135,9 @@ const Admin_Dashboard = () => {
         // Construct JSON object based on the selected security level
         const Data = {
           "mode" : "configure",
-          "cmd" : "capture_image",
-          "id" : id,
-          "name" : newEmployee
+          "cmd" : "capture_photo",
+          "emp_id" : selectedEmployeeId,
+          "emp_name" : selectedEmployeeFirstName
         };
         handleConfigurePostRequest(Data);
     };
@@ -134,9 +145,9 @@ const Admin_Dashboard = () => {
     const handleFingerPrintCapture = () => {
         const data = {
           "mode" : "configure",
-          "cmd" : "capture_fp",
-          "id" : id,
-          "name" : newEmployee
+          "cmd" : "capture_finger",
+          "emp_id" : selectedEmployeeId,
+          "emp_name" : selectedEmployeeFirstName
         };
         handleConfigurePostRequest(data);
     };
@@ -144,9 +155,9 @@ const Admin_Dashboard = () => {
     const handlePinCapture = () => {
         const data = {
           "mode" : "configure",
-          "cmd" : "capture_pin",
-          "id" : id,
-          "name" : newEmployee
+          "cmd" : "capture_pincode",
+          "emp_id" : selectedEmployeeId,
+          "emp_name" : selectedEmployeeFirstName
         };
         handleConfigurePostRequest(data);
     };
@@ -195,8 +206,8 @@ const Admin_Dashboard = () => {
                                         id='flexRadioDefault1' 
                                         label='Security Level 1' 
                                         disabled={selectedValue === 'Active' || selectedValue === 'Not Configured'} 
-                                        checked = {securityLevel === 'easy'}
-                                        onChange={() => handleRadioChange('easy')}
+                                        checked = {securityLevel === 'level1'}
+                                        onChange={() => handleRadioChange('level1')}
                                         />
 
                                         <MDBRadio 
@@ -204,8 +215,8 @@ const Admin_Dashboard = () => {
                                         id='flexRadioDefault2' 
                                         label='Security Level 2' 
                                         disabled={selectedValue === 'Active' || selectedValue === 'Not Configured'}
-                                        checked = {securityLevel === 'meadium'}
-                                        onChange={() => handleRadioChange('meadium')}
+                                        checked = {securityLevel === 'level2'}
+                                        onChange={() => handleRadioChange('level2')}
                                         />
 
                                         <MDBRadio 
@@ -213,8 +224,8 @@ const Admin_Dashboard = () => {
                                         id='flexRadioDefault2' 
                                         label='Security Level 3' 
                                         disabled={selectedValue === 'Active' || selectedValue === 'Not Configured'}
-                                        checked = {securityLevel === 'hard'}
-                                        onChange={() => handleRadioChange('hard')}
+                                        checked = {securityLevel === 'level3'}
+                                        onChange={() => handleRadioChange('level3')}
                                         />
                                     </div>
                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end mb-1">
@@ -266,7 +277,28 @@ const Admin_Dashboard = () => {
                             <MDBCardText>
                                 This will Enable only for Configure mode
                             </MDBCardText>
-                            <MDBInput label='New Employee Name' id='form1' type='text' value={newEmployee} onChange={handleNameChange}/>
+                            <div>
+                                {employees.length > 0 && (
+                                <MDBDropdown dropright group className="mr-4" disabled={selectedValue === 'Active' || selectedValue === 'Not Configured'}>
+                                <MDBDropdownToggle>
+                                    {selectedEmployeeId ? (
+                                    // Display the selected employee's name if one is selected
+                                    `${selectedEmployeeFirstName} ${employees.find(emp => emp.emp_id === selectedEmployeeId).last_name}`
+                                    ) : (
+                                    // Show default text if no employee is selected
+                                    'Select Employee'
+                                    )}
+                                </MDBDropdownToggle>
+                                <MDBDropdownMenu>
+                                    {employees.map(employee => (
+                                    <MDBDropdownItem link childTag='button' key={employee.emp_id} onClick={() => handleEmployeeSelect(employee.emp_id, employee.first_name)}>
+                                        {employee.first_name} {employee.last_name}
+                                    </MDBDropdownItem>
+                                    ))}
+                                </MDBDropdownMenu>
+                                </MDBDropdown>
+                                )}
+                            </div>
                             <MDBBtn disabled={selectedValue === 'Active' || selectedValue === 'Not Configured'} className='mt-3' onClick={handleImageCapture}>capture</MDBBtn>
                         </MDBCardBody>
                         </MDBCard>
