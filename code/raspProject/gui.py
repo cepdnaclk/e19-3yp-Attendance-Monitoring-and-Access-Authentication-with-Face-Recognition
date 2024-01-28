@@ -83,7 +83,7 @@ def run_gui(queue):
     root.geometry("800x480")
 
     # Load and resize the background image
-    background_image = Image.open("background.jpg").resize((800, 480))
+    background_image = Image.open("wallpaper.jpg").resize((800, 480))
     background_photo = ImageTk.PhotoImage(background_image)
 
     # Create a label for the background image
@@ -92,7 +92,7 @@ def run_gui(queue):
 
     # Create a canvas for drawing the clock face with enhanced styling
     canvas = tk.Canvas(root, width=200, height=200, bg='lightgray', borderwidth=2, relief="solid")
-    canvas.place(relx=0.33, rely=0.7, anchor='center')  # Center the canvas in the window
+    canvas.place(relx=0.5, rely=0.3, anchor='center')  # Center the canvas in the window
 
     # Add a circle representing the clock face
     canvas.create_oval(5, 5, 195, 195, outline='black', width=2)
@@ -114,8 +114,8 @@ def run_gui(queue):
         root,
         text="January 22, 2024",
         font=("Arial", 18, "italic"),
-        fg='green',  # Set foreground color
-        bg='lightyellow',  # Set background color
+        fg='blue',  # Set foreground color
+        bg='white',  # Set background color
         padx=10,  # Add padding on the x-axis
         pady=5,  # Add padding on the y-axis
         borderwidth=2,  # Add a border
@@ -125,7 +125,7 @@ def run_gui(queue):
 
     # Place the date label to the right side of the window
     date_label.pack(pady=10, anchor='e')
-    date_label.place(relx=0.7, rely=0.7, anchor='center')
+    date_label.place(relx=0.175, rely=0.145, anchor='center')
 
     # Create a label for displaying messages
     label = tk.Label(
@@ -143,7 +143,7 @@ def run_gui(queue):
 
     # Place the label in the center of the window
     label.pack(pady=50)
-    label.place(relx=0.5, rely=0.2, anchor='center')
+    label.place(relx=0.5, rely=0.8, anchor='center')
 
     # Call the example function
     update_time()
