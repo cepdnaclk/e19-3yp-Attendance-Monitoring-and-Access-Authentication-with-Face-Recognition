@@ -101,32 +101,22 @@ They have their profile to see their attendance
 | Jumper Wires                |        20        |          10          |                 200                             |
 |Total Cost                   |                  |                      |              46,170                             |
 
-## 1.Problem Overview
-
-Deficiencies of Manual Attendance Management System​
-
-- Time-Consuming Process​
-- Prone to Errors​
-- Lack of Real-Time Data​
-- Bureaucratic Hassles​
-- Limited Scalability​
-- Security Concerns​
-  
 ## 6.Components
 
--Raspberry Pi 3 Board
--Raspberry Pi Camera Module 3
--RE307 Fingerprint Sensor
--Keypad
--Solenoid Door Lock
--PIR Sensor Module     
-
+- Raspberry Pi 3 Board​
+- Raspberry Pi Camera Module 3​
+- RE307 Fingerprint Sensor
+- Keypad
+- Solenoid Door Lock
+- PIR Sensor Module 
+  
 ## 7.Extendibility & Scalability
 
--Integration with Other Systems
--Advanced Reporting Modules
--Accurate & consistent performance
--Regular checking
--Power switching mode
--Error Handling
--Easily scalable
+- Integration with Other Systems​
+- Advanced Reporting Modules​
+- Accurate & consistent performance
+- Power switching mode
+- Error Handling
+- Easily scalable
+
+
