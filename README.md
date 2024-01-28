@@ -88,7 +88,7 @@ They have their profile to see their attendance
   ![](docs/images/3.jpg)
 
 - ### Database
-  ![](docs/assets/img/database.jpg)
+  ![](docs/assets/img/database.png)
 
 ## 5. BOM
 
