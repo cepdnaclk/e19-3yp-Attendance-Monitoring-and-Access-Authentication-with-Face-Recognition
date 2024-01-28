@@ -3,6 +3,11 @@ import os
 from mqtt_communication import publish_msg
 from components import fingerprint, camera, keypad, doorlock
 from configuration_mode import send_request
+from dotenv import load_dotenv, set_key
+
+# Adjust the path to point to the root folder
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+load_dotenv(dotenv_path)
 
 security_level = os.environ.get('SECURITY_LEVEL')
 
@@ -16,16 +21,16 @@ def json_handler(json_payload,queue):
         # Change the security level
         if json_payload.get("cmd", "").lower() == "change_level":
             print("Changing Security Level to", json_payload.get("level", "").lower())
-            os.environ["SECURITY_LEVEL"] = json_payload.get("level", "").lower()
-            print("Security Level (changed):", os.environ["SECURITY_LEVEL"])
+            modified_value = json_payload.get("level", "").lower()
+            set_key('.env', 'SECURITY_LEVEL', modified_value)            
             queue.put(f'Changing Security Level to level {security_level}')
 
         # Change the topic
         if json_payload.get("cmd", "").lower() == "change_topic":
             print("Changing Topic to", json_payload.get("topic", "").lower())
-            os.environ["TOPIC"] = json_payload.get("topic", "").lower()
-            print("Topic (changed):", os.environ["TOPIC"])
-            queue.put(f'Topic changed to ')
+            modified_value = json_payload.get("topic", "").lower()
+            set_key('.env', 'TOPIC', modified_value) 
+            queue.put(f'Topic changed {modified_value}')
         
         if json_payload.get("cmd", "").lower() == "unlock_door":
             print("Unlocking the Door!")

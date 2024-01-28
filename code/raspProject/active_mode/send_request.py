@@ -4,7 +4,7 @@ import requests
 def check_pincode(pincode, emp_id, backend_url):
     payload = {
         'emp_id': emp_id,
-        'image': pincode
+        'pin_code': pincode
     }
 
     try:

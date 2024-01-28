@@ -5,12 +5,14 @@ import time
 pir = MotionSensor(4)
 
 
-def motion_detector():
+def motion_detector(queue):
     if pir.motion_detected:
         print("Motion Detected")
-        active_handler.attendance_handler()
-        time.sleep(1)
+        queue.put('Motion Detected')
+        active_handler.attendance_handler(queue)
+        time.sleep(10)
 
     else:
         print("No Motion")
-        time.sleep(1)
+        queue.put('No Motion')
+        time.sleep(5)

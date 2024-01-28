@@ -5,6 +5,15 @@ import requests
 import base64
 import time
 from datetime import datetime
+import os
+
+from dotenv import load_dotenv, set_key
+
+# Adjust the path to point to the root folder
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+load_dotenv(dotenv_path)
+
+topic = os.environ.get('TOPIC')
 
 
 def camera_setup():
@@ -46,6 +55,7 @@ def capture_face_detection():
             payload = {
                 'in_time': str(current_time),
                 'image': img_base64,
+                'topic': topic,
             }
 
             response = requests.post(backend_url, json=payload)
@@ -101,6 +111,7 @@ def capture_face_sending(emp_id):
             payload = {
                 'emp_id': emp_id,
                 'image': img_base64,
+                'topic': topic,
             }
 
             response = requests.post(backend_url, json=payload)
