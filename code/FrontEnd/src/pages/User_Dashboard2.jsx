@@ -19,6 +19,30 @@ const User_Dashboard2 = () => {
     const [selectedMonth, setSelectedMonth] = useState(1);
     const [attendanceData, setAttendanceData] = useState([]);
 
+    const [Month, setMonth] = useState(null);
+    const [Day, setDay] = useState(null);
+    const [Year, setYear] = useState(null);
+    const [presentStates, setPresentStates] = useState([]);
+    const [inTimes, setInTimes] = useState([]);
+    const [status, setStatus] = useState('');
+
+    useEffect(() => {
+        if (userData) {
+            const fetchAttendanceData = async () => {
+                try {
+                    const response = await axios.get(`https://facesecure.azurewebsites.net/attendanceManagement/get-attendance-date-emp/${userData.emp_id}/2024/1/29/`);
+                    const attendanceDetails = response.data.attendance_details;
+                    const present = attendanceDetails.length > 0 ? attendanceDetails[0].present : false;
+                    setStatus(present ? 'Present' : 'Absent');
+                } catch (error) {
+                    console.error('Error fetching attendance data:', error);
+                }
+            };
+
+            fetchAttendanceData();
+        }
+    }, [userData]);
+
     const handleMonthChange = date => {
         setSelectedMonth(date.getMonth() + 1); // Get the month (0-indexed) and add 1 to get the month number (1-indexed)
     };
@@ -34,8 +58,53 @@ const User_Dashboard2 = () => {
     const maxDate = new Date(); // Get current date
     maxDate.setDate(maxDate.getDate() - 1); // Subtract one day
 
+    const fetchAttendanceData = async (id, day, month, year) => {
+        try {
+            // Construct the URL with the provided parameters
+            const url = `https://facesecure.azurewebsites.net/attendanceManagement/get-attendance-date-emp/${id}/${year}/${month}/${day}/`;
+    
+            // Make a GET request to fetch the attendance data
+            const response = await axios.get(url, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    
+                },
+            });
+    
+            // Extract the attendance details from the response
+            const { attendance_details } = response.data;
+    
+            // Extract present state and in_time from each attendance detail
+            const presentStates = attendance_details.map(detail => detail.present);
+            const inTimes = attendance_details.map(detail => detail.in_time);
+    
+            // Update the state variables with the extracted data
+            setPresentStates(presentStates);
+            setInTimes(inTimes);
+
+            console.log(day,"month", month);
+            console.log(presentStates)
+        } catch (error) {
+            // Handle errors
+            console.error('Error fetching attendance data:', error);
+        }
+    };
+
     const handleDateChange = date => {
         setSelectedDate(date);
+
+        // Get the month, day, and year of the selected date
+        const month = date.getMonth() + 1; // Months are zero-based, so add 1 to get the correct month
+        const day = date.getDate();
+        const year = date.getFullYear();
+
+
+        // Set the state variables
+        setMonth(month);
+        setDay(day);
+        setYear(year);
+
+        fetchAttendanceData(userData.emp_id, day, month, year);
     };
 
     useEffect(() => {
@@ -112,7 +181,6 @@ const User_Dashboard2 = () => {
                         <h5><b>Employee ID</b> : {userData.emp_id}</h5>
                         <h5><b>First Name</b> : {userData.first_name}</h5>
                         <h5><b>Last Name</b> : {userData.last_name}</h5>
-                        <h5><b>Department</b> : {userData.department}</h5>
                         <h5><b>Email</b> : {userData.emp_email}</h5>
                         <h5><b>Contact address</b> : {userData.contact_address}</h5>
 
@@ -122,7 +190,7 @@ const User_Dashboard2 = () => {
                         <h2>Today: <span style={{ color: 'blue' }}>{currentDate}</span></h2>
 
                         <h2>
-                         <b>Status: <span style={{ color: 'blue' }}>Present</span></b>
+                        <b>Status: <span style={{ color: 'blue' }}>{status}</span></b>
                         </h2>
 
                     </MDBCol>
@@ -144,7 +212,8 @@ const User_Dashboard2 = () => {
                         </div>
                         {selectedDate && (
                             <div className="mt-3">
-                                <p><b>Selected Date: {selectedDate.toLocaleDateString()}</b></p>
+                                <h5><b>Selected Date: {selectedDate.toLocaleDateString()}</b></h5>
+                                <h5>State: {presentStates.length > 0 ? (presentStates[0] ? 'Present' : 'Absent') : 'Absent'}</h5>
 
                             </div>
                         )}

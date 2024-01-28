@@ -135,7 +135,6 @@ function Signup() {
             onChange={(e) => setLastname(e.target.value)}/>
 
            <div className="mb-3" style={{ color: '#318CE7' }}>
-                {/* <label htmlFor="gender">Gender</label> */}
                 <select
                   id="form3"
                   className="form-select" 
@@ -143,9 +142,9 @@ function Signup() {
                   onChange={handleGenderChange}
                 >
                   <option value="">Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
+                  <option value="M">Male</option>
+                  <option value="F">Female</option>
+                  <option value="O">Other</option>
                 </select>
               </div>
             {/* <MDBInput wrapperClass='mb-3' label='Gender' id='form3' type='text'
@@ -179,7 +178,7 @@ function Signup() {
             onChange={(e) => setConfirmpassword(e.target.value)}/>
 
             <div className="mb-3" style={{ color: '#318CE7' }}>
-                {/* <label htmlFor="gender">Gender</label> */}
+               
                 <select
                   id="form9"
                   className="form-select" 
@@ -187,9 +186,9 @@ function Signup() {
                   onChange={handleDepartmentChange}
                 >
                   <option value="">Department</option>
-                  <option value="com">Department of Computer Engineering</option>
-                  <option value="elec">Department of Electrical Engineering</option>
-                  <option value="management">Department of Management</option>
+                  <option value="1">Department of Computer Engineering</option>
+                  <option value="2">Department of Electrical Engineering</option>
+                  <option value="3">Department of Management</option>
                 </select>
               </div>
 
