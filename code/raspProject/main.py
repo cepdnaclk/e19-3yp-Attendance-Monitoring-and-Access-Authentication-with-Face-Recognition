@@ -1,21 +1,22 @@
 import json
-import subprocess
+import os
 import random
 import threading
 import time
-
-import mqtt_communication.config_mqtt as config
 from paho.mqtt import client as mqtt_client
-from control_logic import json_decorder
-from attendance_recognition import main_loop
+from configuration_mode import config_handler
+from active_mode import main_loop
+from dotenv import load_dotenv
 
-broker = config.broker
-port = config.port
-topic = config.topic
-# generate client ID with pub prefix randomly
-client_id_sub = f'python-mqtt-{random.randint(0, 100)}'
-username = config.username
-password = config.password
+
+
+broker = os.environ.get('BROKER')
+port = os.environ.get('PORT')
+topic = os.environ.get('TOPIC')
+client_id = f'python-mqtt-{random.randint(0, 1000)}'
+username = os.environ.get('USERNAME')
+password = os.environ.get('PASSWORD')
+ca_cert = os.environ.get('CA')
 
 # Event to control the read_input function
 event = threading.Event()
@@ -28,36 +29,36 @@ def connect_mqtt() -> mqtt_client:
         else:
             print("Failed to connect, return code %d\n", rc)
 
-    client = mqtt_client.Client(client_id_sub)
+    client = mqtt_client.Client(client_id)
     client.tls_set(ca_certs="./mqtt_communication/emqxsl-ca.crt")
     client.username_pw_set(username, password)
     client.on_connect = on_connect
-    client.connect(broker, port)
+    client.connect(broker, int(port))
     return client
 
 
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
-        global event  # Use the global event
+        global event
 
         payload = msg.payload.decode()
         print(f"Received `{payload}` from `{msg.topic}` topic")
 
-        json_payload = json.loads(payload)
+        try:
+            json_payload = json.loads(payload)
 
-        if json_payload.get("mode", "").lower() == "configure":
-            print("Configuration Mode Activated")
-            json_decorder.json_decorator(msg)
-            # Stop reading input in configure mode
-            event.clear()
+            if json_payload.get("mode", "").lower() == "configure":
+                print("Configuration Mode Activated")
+                event.clear()
 
-        elif json_payload.get("mode", "").lower() == "active":
-            print("Active Mode Activated")
-            # Start reading input in active mode
-            event.set()
+                config_handler.json_handler(json_payload)
 
-        elif json_payload.get("mode", "").lower() == "unlock":
-            print("Unlock the Door")
+            elif json_payload.get("mode", "").lower() == "active":
+                print("Active Mode Activated")
+                event.set()
+
+        except json.JSONDecodeError as e:
+            print(f"Error decoding JSON: {e}")
 
     client.subscribe(topic)
     client.on_message = on_message
@@ -68,7 +69,7 @@ def read_input():
         if event.is_set():
             main_loop.motion_detector()
         else:
-            time.sleep(1)
+            time.sleep(5)
 
 
 def run():

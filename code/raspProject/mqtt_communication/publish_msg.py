@@ -1,17 +1,16 @@
+import random
 import time
 from paho.mqtt import client as mqtt_client
-from mqtt_communication import config_mqtt
 import json
 import os
 
 
-broker = config_mqtt.broker
-port = config_mqtt.port
-topic = config_mqtt.topic
-# generate client ID with pub prefix randomly
-client_id = config_mqtt.client_id
-username = config_mqtt.username
-password = config_mqtt.password
+broker = os.environ.get('BROKER')
+port = os.environ.get('PORT')
+topic = os.environ.get('TOPIC')
+client_id = f'python-mqtt-{random.randint(0, 1000)}'
+username = os.environ.get('USERNAME')
+password = os.environ.get('PASSWORD')
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 cert_path = os.path.join(script_dir, 'emqxsl-ca.crt')
@@ -25,10 +24,10 @@ def connect_mqtt():
             print("Failed to connect, return code %d\n", rc)
 
     client = mqtt_client.Client(client_id)
-    client.tls_set(ca_certs=cert_path)
+    client.tls_set(ca_certs="./mqtt_communication/emqxsl-ca.crt")
     client.username_pw_set(username, password)
     client.on_connect = on_connect
-    client.connect(broker, port)
+    client.connect(broker, int(port))
     return client
 
 
