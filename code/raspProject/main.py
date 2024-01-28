@@ -77,7 +77,7 @@ def read_input(queue: Queue):
             print(f"Processing message from MQTT: {message}")
 
         if event.is_set():
-            main_loop.motion_detector(queue, security_level)
+            main_loop.motion_detector(queue)
         else:
             time.sleep(5)
 

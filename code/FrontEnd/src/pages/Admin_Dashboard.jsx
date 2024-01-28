@@ -145,8 +145,7 @@ const Admin_Dashboard = () => {
 
     // Capture images for new employee
     const handleImageCapture = () => {
-        //generate a id for the employee
-        generateId();
+        
         // Construct JSON object based on the selected security level
         const Data = {
           "mode" : "configure",

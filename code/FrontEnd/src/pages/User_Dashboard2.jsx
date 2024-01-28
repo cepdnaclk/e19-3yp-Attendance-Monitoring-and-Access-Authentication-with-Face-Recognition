@@ -119,9 +119,12 @@ const User_Dashboard2 = () => {
                     </MDBCol>
 
                     <MDBCol size='6'>
-                        <h2>Today</h2>
-                        <h2>{currentDate}</h2>
-                        <h2><b>Status :</b></h2>
+                        <h2>Today: <span style={{ color: 'blue' }}>{currentDate}</span></h2>
+
+                        <h2>
+                         <b>Status: <span style={{ color: 'blue' }}>Present</span></b>
+                        </h2>
+
                     </MDBCol>
                 </MDBRow>
 
