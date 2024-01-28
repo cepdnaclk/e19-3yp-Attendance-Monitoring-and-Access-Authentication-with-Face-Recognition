@@ -78,7 +78,7 @@ They have their profile to see their attendance
 - ### Data Flow of the System
   ![](docs/images/2.png)
 
-## 4.Infrastructure
+## 4. Infrastructure
 
 - ### Technology Stack
 
@@ -87,7 +87,7 @@ They have their profile to see their attendance
 - ### Hardware Components
   ![](docs/images/3.png)
 
-## 5.BOM
+## 5. BOM
 
 |    Component                |       Quantity​   |     Unit Price (LKR)​ | Cost (LKR)​                                      |
 | ----------------------------| ---------------- | -------------------- | ----------------------------------------------- |
@@ -101,7 +101,7 @@ They have their profile to see their attendance
 | Jumper Wires                |        20        |          10          |                 200                             |
 |Total Cost                   |                  |                      |              46,170                             |
 
-## 6.Components
+## 6. Components
 
 - Raspberry Pi 3 Board​
 - Raspberry Pi Camera Module 3​
@@ -110,7 +110,7 @@ They have their profile to see their attendance
 - Solenoid Door Lock
 - PIR Sensor Module 
   
-## 7.Extendibility & Scalability
+## 7. Extendibility & Scalability
 
 - Integration with Other Systems​
 - Advanced Reporting Modules​
@@ -119,8 +119,8 @@ They have their profile to see their attendance
 - Error Handling
 - Easily scalable
 
-## 8.For More Details
-[Our Project Page](https://cepdnaclk.github.io/e19-3yp-Attendance-Monitoring-and-Access-Authentication-with-Face-Recognition/)
-[Our Git Repository](https://github.com/cepdnaclk/e19-3yp-Attendance-Monitoringand-Access-Authentication-with-Face-Recognition)
-[Department of Computer Engineering](https://www.ce.pdn.ac.lk/)
-[University of Peradeniya](https://eng.pdn.ac.lk/)
+## 8. For More Details
+- [Our Project Page](https://cepdnaclk.github.io/e19-3yp-Attendance-Monitoring-and-Access-Authentication-with-Face-Recognition/)
+- [Our Git Repository](https://github.com/cepdnaclk/e19-3yp-Attendance-Monitoringand-Access-Authentication-with-Face-Recognition)
+- [Department of Computer Engineering](https://www.ce.pdn.ac.lk/)
+- [University of Peradeniya](https://eng.pdn.ac.lk/)
