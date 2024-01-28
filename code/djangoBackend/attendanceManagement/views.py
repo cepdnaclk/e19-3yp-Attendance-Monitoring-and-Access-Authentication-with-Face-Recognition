@@ -4,7 +4,6 @@ import json
 import os
 import base64
 
-from django.forms import model_to_dict
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from rest_framework.views import APIView
@@ -13,11 +12,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 
-from attendanceManagement.models import Department, EmployeeDetails
+from attendanceManagement.control_logic.serializers import DepartmentSerializer
+from attendanceManagement.models import Department, EmployeeDetails, AttendanceDetails
 from attendanceManagement.mqtt import publish_msg
 from django.conf import settings
 from attendanceManagement.face_detection import recognize_faces_image, encode_faces
 from attendanceManagement.control_logic import request_handler, serializers
+
 
 # --------------- Tested --------------
 
@@ -32,7 +33,7 @@ class HomeView(APIView):
 
 # Log Out REST endpoint
 class LogoutView(APIView):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         try:
@@ -47,11 +48,17 @@ class LogoutView(APIView):
 
 # Configure Mode REST endpoint
 class ConfigureDeviceView(APIView):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
+    serializer_class = serializers.TopicSerializer
 
     def post(self, request):
+
+        topic_id = int(request.data.get('topic'))
+        topic = request_handler.find_topic_name(topic_id=topic_id)
+        topic_details = self.serializer_class(topic, many=True).data
+
         try:
-            publish_msg.run(request.data)
+            publish_msg.run(request.data, topic_name=topic_details[0]['topic_name'])
 
             return Response({'message': 'Configuration sent to MQTT'}, status=status.HTTP_200_OK)
         except Exception as e:
@@ -61,11 +68,17 @@ class ConfigureDeviceView(APIView):
 
 # Active Mode REST endpoint
 class ActiveDeviceView(APIView):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
+    serializer_class = serializers.TopicSerializer
 
     def post(self, request):
+
+        topic_id = int(request.data.get('topic'))
+        topic = request_handler.find_topic_name(topic_id=topic_id)
+        topic_details = self.serializer_class(topic, many=True).data
+
         try:
-            publish_msg.run(request.data)
+            publish_msg.run(request.data, topic_name=topic_details[0]['topic_name'])
 
             return Response({'message': 'Activation sent to MQTT'}, status=status.HTTP_200_OK)
         except Exception as e:
@@ -336,7 +349,7 @@ class EncodeFaces(APIView):
             return Response({'error': f"An error occurred: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-# Storing the photo and mark attendance REST endpoint
+# Mark attendance for an employee
 class MarkAttendanceView(APIView):
     serializer_class = serializers.AttendanceDetailsSerializer
 
@@ -349,32 +362,42 @@ class MarkAttendanceView(APIView):
                 return Response({'error': 'Image file is required'}, status=status.HTTP_400_BAD_REQUEST)
 
             image_file = base64.b64decode(image_file_64)
-            # Save the image to a folder
             image_path = self.save_image(image_file)
             emp_id = self.get_name(image_path)
 
             if emp_id == "Unknown":
                 return Response({'message': 'Face Data is not in the database', 'emp_id': emp_id},
                                 status=status.HTTP_200_OK)
-
             else:
-                data = {
-                    'emp': emp_id,
-                    'date': datetime.date.today(),
-                    'present': True,
-                    'in_time': in_time
-                }
 
-                try:
-                    serializer = self.serializer_class(data=data)
-                    if serializer.is_valid():
-                        serializer.save()
-                        return Response({'message': 'Attendance saved successfully', 'emp_id': emp_id}, status=status.HTTP_200_OK)
-                    else:
-                        return Response({'error': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
+                existing_attendance = AttendanceDetails.objects.filter(
+                    emp=emp_id,
+                    date=datetime.date.today()
+                ).first()
 
-                except Exception as e:
-                    return Response({'error': f"An error occurred: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                if existing_attendance:
+                    return Response({'message': 'Attendance already saved for today', 'emp_id': emp_id},
+                                    status=status.HTTP_200_OK)
+                else:
+                    data = {
+                        'emp': emp_id,
+                        'date': datetime.date.today(),
+                        'present': True,
+                        'in_time': in_time
+                    }
+
+                    try:
+                        serializer = self.serializer_class(data=data)
+                        if serializer.is_valid():
+                            serializer.save()
+                            return Response({'message': 'Attendance saved successfully', 'emp_id': emp_id},
+                                            status=status.HTTP_200_OK)
+                        else:
+                            return Response({'error': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
+
+                    except Exception as e:
+                        return Response({'error': f"An error occurred: {str(e)}"},
+                                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         except Exception as e:
             return Response({'error': f"An error occurred: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -473,7 +496,7 @@ class StoreFPView(APIView):
         try:
             emp_id_value = request.data.get('emp_id')
 
-            if not  emp_id_value:
+            if not emp_id_value:
                 return Response({'error': 'Employee ID is required'},
                                 status=status.HTTP_400_BAD_REQUEST)
 
@@ -490,4 +513,26 @@ class StoreFPView(APIView):
             return Response({'error': f"An error occurred: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+# Get attendance details according to the emp_id and date
+class GetAttendanceDateView(APIView):
+    serializer_class = serializers.AttendanceDetailsSerializer
 
+    def get(self, request, emp_id, year, month, date):
+        try:
+            emp_id = int(emp_id)
+            target_year = int(year)
+            target_month = int(month)
+            target_date = int(date)
+
+            attendance_details = request_handler.get_attendance_detail_date_emp(emp_id=emp_id, target_year=target_year,
+                                                                                target_month=target_month,
+                                                                                target_date=target_date)
+
+            # Serialize the attendance details using AttendanceSerializer
+            serializer = self.serializer_class(attendance_details, many=True)
+            serialized_data = serializer.data
+
+            return JsonResponse({'attendance_details': serialized_data}, status=200)
+
+        except ValueError:
+            return JsonResponse({'error': 'Invalid emp_id or month'}, status=400)
