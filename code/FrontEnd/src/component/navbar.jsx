@@ -8,6 +8,31 @@ import axios from "axios";
 const Navbar = () => {
     const navigate = useNavigate();
 
+    const handleUnlockDoor = async () => {
+      try {
+        // Define the JSON payload
+        const payload = {
+          "mode" : 'configure',
+          "cmd" : 'unlock_door',
+          "topic" : 1
+        };
+  
+        // Send a POST request to the endpoint
+        const response = await axios.post('https://facesecure.azurewebsites.net/attendanceManagement/configure/', payload, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}` // Assuming you have an access token stored in localStorage
+          }
+        });
+  
+        // Handle the response if needed
+        console.log('Unlock door response:', response.data);
+      } catch (error) {
+        // Handle errors
+        console.error('Error unlocking door:', error);
+      }
+    };
+
     const handleLogout = async () => {
       console.log("logout is pressed")
       try {
@@ -68,7 +93,7 @@ const Navbar = () => {
           </div>
 
           <div className="d-flex align-items-center mr-5">
-            <button style={{ backgroundColor: "white", color: "black" }} className="btn btn-link px-3 me-2" onClick={handleLogout}>
+            <button style={{ backgroundColor: "white", color: "black" }} className="btn btn-link px-3 me-2" onClick={handleUnlockDoor}>
               Unlock door
             </button>
           </div>

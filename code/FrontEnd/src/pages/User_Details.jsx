@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import backgroundImg from '../assets/background.jpg';
 import Navbar from '../component/navbar';
 import axios from 'axios';
-import { MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon } from 'mdb-react-ui-kit';
+import { MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon, MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 import '../css/User_Details.css';
 import DatePicker from 'react-datepicker';
 
@@ -14,6 +14,7 @@ const User_Details = () => {
     const [employees, setEmployees] = useState([]);
     const [selectedEmployeeId, setSelectedEmployeeId] = useState(1);
     const [selectedMonth, setSelectedMonth] = useState(1);
+    const [attendanceData, setAttendanceData] = useState([]);
 
 
     const handleEmployeeSelect = (empId) => {
@@ -44,6 +45,22 @@ const User_Details = () => {
 
     fetchEmployees();
     }, []);
+
+    const fetchAttendanceData = async () => {
+        try {
+          if (selectedEmployeeId && selectedMonth) {
+            const response = await axios.get(`https://facesecure.azurewebsites.net/attendanceManagement/get-attendance/${selectedEmployeeId}/${selectedMonth}/`);
+            setAttendanceData(response.data.attendance_details);
+          }
+        } catch (error) {
+          console.error('Error fetching attendance data:', error);
+        }
+      };
+    
+      // Fetch attendance data when component mounts and when selectedEmployeeId or selectedMonth changes
+      useEffect(() => {
+        fetchAttendanceData();
+      }, [selectedEmployeeId, selectedMonth]);
 
     useEffect(() => {
         if (localStorage.getItem('access_token') !== null) {
@@ -98,9 +115,25 @@ const User_Details = () => {
 
                     <MDBIcon fab icon="searchengin" className='ms-1 ml-3' size='3x'/>
                 </div>
-
-                <div>
                     
+                <div className="m-5" style={{backgroundColor: 'rgba(255,255,255,0.6)'}}>
+                    <h1>Attendance Data</h1>
+                    <MDBTable striped hover>
+                        <MDBTableHead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Entrance Time</th>
+                        </tr>
+                        </MDBTableHead>
+                        <MDBTableBody>
+                        {attendanceData.map(attendance => (
+                            <tr key={attendance.attendance_id}>
+                            <td>{attendance.date}</td>
+                            <td>{attendance.in_time}</td>
+                            </tr>
+                        ))}
+                        </MDBTableBody>
+                    </MDBTable>
                 </div>
             </div>
 
