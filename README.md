@@ -78,16 +78,19 @@ They have their profile to see their attendance
 - ### Data Flow of the System
   ![](docs/images/2.png)
 
-## 4.Infrastructure
+## 4. Infrastructure
 
 - ### Technology Stack
 
   ![](docs/images/4.png)
 
 - ### Hardware Components
-  ![](docs/images/3.png)
+  ![](docs/images/3.jpg)
 
-## 5.BOM
+- ### Database
+  ![](docs/assets/img/database.png)
+
+## 5. BOM
 
 |    Component                |       Quantity​   |     Unit Price (LKR)​ | Cost (LKR)​                                      |
 | ----------------------------| ---------------- | -------------------- | ----------------------------------------------- |
@@ -101,4 +104,26 @@ They have their profile to see their attendance
 | Jumper Wires                |        20        |          10          |                 200                             |
 |Total Cost                   |                  |                      |              46,170                             |
 
-## 6.Extendibility & Scalability
+## 6. Components
+
+- Raspberry Pi 3 Board​
+- Raspberry Pi Camera Module 3​
+- RE307 Fingerprint Sensor
+- Keypad
+- Solenoid Door Lock
+- PIR Sensor Module 
+  
+## 7. Extendibility & Scalability
+
+- Integration with Other Systems​
+- Advanced Reporting Modules​
+- Accurate & consistent performance
+- Power switching mode
+- Error Handling
+- Easily scalable
+
+## 8. For More Details
+- [Our Project Page](https://cepdnaclk.github.io/e19-3yp-Attendance-Monitoring-and-Access-Authentication-with-Face-Recognition/)
+- [Our Git Repository](https://github.com/cepdnaclk/e19-3yp-Attendance-Monitoringand-Access-Authentication-with-Face-Recognition)
+- [Department of Computer Engineering](https://www.ce.pdn.ac.lk/)
+- [University of Peradeniya](https://eng.pdn.ac.lk/)
