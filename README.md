@@ -101,6 +101,17 @@ They have their profile to see their attendance
 | Jumper Wires                |        20        |          10          |                 200                             |
 |Total Cost                   |                  |                      |              46,170                             |
 
+## 1.Problem Overview
+
+Deficiencies of Manual Attendance Management System​
+
+- Time-Consuming Process​
+- Prone to Errors​
+- Lack of Real-Time Data​
+- Bureaucratic Hassles​
+- Limited Scalability​
+- Security Concerns​
+  
 ## 6.Components
 
 -Raspberry Pi 3 Board
