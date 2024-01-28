@@ -119,4 +119,8 @@ They have their profile to see their attendance
 - Error Handling
 - Easily scalable
 
-[Tharudi Perera](https://www.thecn.com/TP993)
+## 8.For More Details
+[Our Project Page](https://cepdnaclk.github.io/e19-3yp-Attendance-Monitoring-and-Access-Authentication-with-Face-Recognition/)
+[Our Git Repository](https://github.com/cepdnaclk/e19-3yp-Attendance-Monitoringand-Access-Authentication-with-Face-Recognition)
+[Department of Computer Engineering](https://www.ce.pdn.ac.lk/)
+[University of Peradeniya](https://eng.pdn.ac.lk/)
