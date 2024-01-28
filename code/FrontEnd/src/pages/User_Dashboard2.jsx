@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import backgroundImg from '../assets/background.jpg';
 import UserNavbar from "../component/userNavbar";
 import { useNavigate, useLocation } from 'react-router-dom';
-import { MDBContainer, MDBRow, MDBCol, MDBIcon } from 'mdb-react-ui-kit';
+import { MDBContainer, MDBRow, MDBCol, MDBIcon, MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -16,7 +16,21 @@ const User_Dashboard2 = () => {
     const [isLoading, setIsLoading] = useState(true);
     const currentDate = new Date().toLocaleDateString();
     const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedMonth, setSelectedMonth] = useState(1);
+    const [attendanceData, setAttendanceData] = useState([]);
 
+    const handleMonthChange = date => {
+        setSelectedMonth(date.getMonth() + 1); // Get the month (0-indexed) and add 1 to get the month number (1-indexed)
+    };
+
+    const renderMonthContent = (month, shortMonth, longMonth, day) => {
+        const fullYear = new Date(day).getFullYear();
+        const tooltipText = `Select month: ${longMonth} ${fullYear}`;
+
+        return <span title={tooltipText}>{shortMonth}</span>;
+    };
+
+    // set max date that can query by user
     const maxDate = new Date(); // Get current date
     maxDate.setDate(maxDate.getDate() - 1); // Subtract one day
 
@@ -47,6 +61,26 @@ const User_Dashboard2 = () => {
         // Call the fetchUserData function when the component mounts
         fetchUserData();
     }, [email]); // Add email to the dependency array to re-run the effect when email changes
+
+    
+    useEffect(() => {
+        // Check if userData is defined before fetching attendance data
+        if (userData && selectedMonth) {
+            // Fetch attendance data based on employee id (e.g., 1) and selected month (e.g., 1 for January)
+            axios.get(`https://facesecure.azurewebsites.net/attendanceManagement/get-attendance/${userData.emp_id}/${selectedMonth}/`)
+                .then(response => {
+                    setAttendanceData(response.data.attendance_details);
+                })
+                .catch(error => {
+                    console.error('Error fetching attendance data:', error);
+                });
+        }
+    }, [userData, selectedMonth]); // Add userData and selectedMonth to the dependency array
+
+    // useEffect(() => {
+    //     console.log("Attendance data:", attendanceData);
+    // }, [attendanceData]);
+
 
     useEffect(() => {
         if (localStorage.getItem('access_token') !== null) {
@@ -93,22 +127,58 @@ const User_Dashboard2 = () => {
 
                 <MDBRow className="mt-5">
                     <MDBCol size='6'>
-                        <h2><b>SEARCH  </b> <MDBIcon fas icon="search" /> </h2>
+                        <h2><b>SEARCH </b> <MDBIcon fas icon="search" /> </h2>
                         <div className="mt-4">
                             <DatePicker
                                 selected={selectedDate}
                                 onChange={handleDateChange}
-                                dateFormat="dd/MM/yyyy" // Adjust date format
+                                dateFormat="MM/dd/yyyy" // Adjust date format
                                 minDate={null} // Disable future dates
                                 maxDate={maxDate} // Disable future dates
                                 inline
                                 showDisabledMonthNavigation
                             />
                         </div>
+                        {selectedDate && (
+                            <div className="mt-3">
+                                <p><b>Selected Date: {selectedDate.toLocaleDateString()}</b></p>
+
+                            </div>
+                        )}
                         
                     </MDBCol>
                     <MDBCol size='6'>
-                        <p>this is 4</p>
+                        <h2>Filter Present dates by Month</h2>
+                        <div>
+                            <DatePicker
+                                selected={selectedMonth ? new Date(new Date().getFullYear(), selectedMonth - 1, 1) : null}
+                                onChange={handleMonthChange}
+                                renderMonthContent={renderMonthContent}
+                                showMonthYearPicker
+                                dateFormat="MM/yyyy"
+                            />
+                            {selectedMonth && (
+                                <div className="mt-3">
+                                    <p>Selected Month: {selectedMonth}</p>
+                                </div>
+                            )}
+                            <MDBTable striped>
+                                <MDBTableHead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Entrance Time</th>
+                                    </tr>
+                                </MDBTableHead>
+                                <MDBTableBody>
+                                    {attendanceData.map(attendance => (
+                                        <tr key={attendance.attendance_id} >
+                                            <td>{attendance.date}</td>
+                                            <td>{attendance.in_time}</td>
+                                        </tr>
+                                    ))}
+                                </MDBTableBody>
+                            </MDBTable>
+                        </div>
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
