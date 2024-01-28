@@ -9,6 +9,7 @@ from datetime import datetime
 
 def camera_setup():
     camera = PiCamera()
+    camera.rotation = 90
     camera.brightness = 70
     camera.contrast = 20
     camera.resolution = (640, 480)
@@ -24,7 +25,7 @@ def detect_bounding_box(frame):
 
 
 def capture_face_detection():
-    backend_url = "https://face-secure.azurewebsites.net/attendanceManagement/mark_attendance/"
+    backend_url = "https://facesecure.azurewebsites.net/attendanceManagement/mark-attendance/"
     camera = camera_setup()
     rawCapture = PiRGBArray(camera)
     time.sleep(0.1)
@@ -32,13 +33,18 @@ def capture_face_detection():
 
     camera.start_preview()
     for frame_count, frame in enumerate(camera.capture_continuous(rawCapture, format="bgr"), 1):
-        if detect_bounding_box(frame):  # if a face was detected
-            _, img_buffer = cv2.imencode('.jpg', frame)
+        video_frame = frame.array  # Access the BGR image from the PiRGBArray
+
+        if detect_bounding_box(video_frame):  # if a face was detected
+            _, img_buffer = cv2.imencode('.jpg', video_frame)
             img_base64 = base64.b64encode(img_buffer).decode('utf-8')
-            current_time = datetime.now().strftime("%Y%m%d%H%M%S%f")[:-3]
+            current_time = datetime.now().strftime("%H:%M:%S")[:-3]
+            
+            camera.stop_preview()
+            cv2.destroyAllWindows()
 
             payload = {
-                'time': current_time,
+                'in_time': str(current_time),
                 'image': img_base64,
             }
 
@@ -72,9 +78,9 @@ def capture_face_detection():
     return emp_id, True
 
 
+
 def capture_face_sending(emp_id):
-    # Set your backend API endpoint
-    backend_url = "https://face-secure.azurewebsites.net/attendanceManagement/store_faces/"
+    backend_url = "https://facesecure.azurewebsites.net/attendanceManagement/store-faces/"
 
     camera = camera_setup()
     time.sleep(0.1)

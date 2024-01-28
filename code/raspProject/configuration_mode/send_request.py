@@ -1,10 +1,10 @@
 import requests
 
 
-def send_pincode(pincode, backend_url):
+def send_pincode(pincode, backend_url, emp_id):
     payload = {
-        'emp_id': '123',  # Replace with the actual employee ID
-        'image': pincode
+        'emp': emp_id,
+        'pin_code': pincode
     }
 
     try:

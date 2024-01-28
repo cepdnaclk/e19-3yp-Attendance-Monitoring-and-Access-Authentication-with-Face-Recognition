@@ -110,7 +110,7 @@ function Signup() {
       alignItems: 'center',
     }}
     >
-    <MDBContainer className="my-5 gradient-form" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', maxWidth:'50%'}}>
+    <MDBContainer className="my-5 gradient-form" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', margin: '0 auto', maxWidth: '50%',backgroundColor: 'rgba(255, 255, 255, 0.9)',borderRadius: '15px',transition: 'transform 0.3s ease-in-out'}}>
 
           <div className="d-flex flex-column ms-4 me-4 mt-4 mb-4">
 
@@ -134,9 +134,9 @@ function Signup() {
             style={{ color: '#318CE7' }}
             onChange={(e) => setLastname(e.target.value)}/>
 
-           {/* <div className="mb-3" style={{ color: '#318CE7' }}> */}
+           <div className="mb-3" style={{ color: '#318CE7' }}>
                 {/* <label htmlFor="gender">Gender</label> */}
-                {/* <select
+                <select
                   id="form3"
                   className="form-select" 
                   value={gender}
@@ -147,11 +147,11 @@ function Signup() {
                   <option value="female">Female</option>
                   <option value="other">Other</option>
                 </select>
-              </div> */}
-            <MDBInput wrapperClass='mb-3' label='Gender' id='form3' type='text'
+              </div>
+            {/* <MDBInput wrapperClass='mb-3' label='Gender' id='form3' type='text'
             value={gender}
             style={{ color: '#318CE7' }}
-            onChange={(e) => setGender(e.target.value)}/>
+            onChange={(e) => setGender(e.target.value)}/> */}
 
 
             <MDBInput wrapperClass='mb-3' label='Age' id='form4' type='text'
@@ -178,25 +178,25 @@ function Signup() {
             style={{ color: '#318CE7' }}
             onChange={(e) => setConfirmpassword(e.target.value)}/>
 
-            {/* <div className="mb-3" style={{ color: '#318CE7' }}>
+            <div className="mb-3" style={{ color: '#318CE7' }}>
                 {/* <label htmlFor="gender">Gender</label> */}
-                {/*<select
-                  id="form3"
+                <select
+                  id="form9"
                   className="form-select" 
-                  value={gender}
+                  value={depname}
                   onChange={handleDepartmentChange}
                 >
                   <option value="">Department</option>
-                  <option value="male">A</option>
-                  <option value="female">B</option>
-                  <option value="other">C</option>
+                  <option value="com">Department of Computer Engineering</option>
+                  <option value="elec">Department of Electrical Engineering</option>
+                  <option value="management">Department of Management</option>
                 </select>
-              </div> */}
+              </div>
 
-            <MDBInput wrapperClass='mb-3' label='Department name' id='form9' type='text'
+            {/* <MDBInput wrapperClass='mb-3' label='Department name' id='form9' type='text'
             value={depname}
             style={{ color: '#318CE7' }}
-            onChange={(e) => setDepname(e.target.value)}/>
+            onChange={(e) => setDepname(e.target.value)}/> */}
 
             <MDBInput wrapperClass='mb-3' label='Contact address' id='form10' type='text'
             value={address}
