@@ -57,6 +57,7 @@ def get_emp_email(emp_email):
         print(f"An error occurred while getting attendance details: {str(e)}")
         return []
 
+
 def get_attendance_details(emp_id, month):
     try:
         # Get the Employee instance
@@ -183,4 +184,35 @@ def get_attendance_detail_date(emp_id, month):
     except Exception as e:
         print(f"An error occurred while getting attendance details: {str(e)}")
         return []
+
+
+
+def get_attendance_detail_date_emp(emp_id, target_year, target_month, target_date):
+    try:
+        employee = EmployeeDetails.objects.get(emp_id=emp_id)
+
+        target_date = datetime(target_year, target_month, target_date)
+
+        attendance_details = AttendanceDetails.objects.filter(
+            emp_id=employee,
+            date=target_date
+        )
+
+        return attendance_details
+
+    except EmployeeDetails.DoesNotExist:
+        print(f"Employee with emp_id={emp_id} does not exist.")
+        return []
+    except Exception as e:
+        print(f"An error occurred while getting attendance details: {str(e)}")
+        return []
+
+
+def find_topic_name(topic_id):
+    try:
+        topic = Topic.objects.filter(topic_id=topic_id)
+        print(topic)
+        return topic
+    except Topic.DoesNotExist:
+        print(f"Topic with topic_id={topic_id} does not exist.")
 # ----------------------------

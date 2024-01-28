@@ -21,6 +21,7 @@ urlpatterns = [
     path('save-pin/', views.StorePinView.as_view(), name='store-pin'),
     path('check-pin/', views.CheckPinView.as_view(), name='check-pin'),
     path('save-device-lock/', views.StoreDeviceLockView.as_view(), name='store-lock'),
+    path('get-attendance-date-emp/<int:emp_id>/<int:year>/<int:month>/<int:date>/', views.GetAttendanceDateView.as_view(), name='get-attendance-date-emp'),
 
     path('store-fp/', views.StoreFPView.as_view(), name='fp'),  # Not Used
 ]

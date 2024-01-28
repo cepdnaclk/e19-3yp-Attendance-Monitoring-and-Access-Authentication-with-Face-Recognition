@@ -6,9 +6,6 @@ import os
 
 broker = config_mqtt.broker
 port = config_mqtt.port
-topic = config_mqtt.topic
-# generate client ID with pub prefix randomly
-client_id = config_mqtt.client_id
 username = config_mqtt.username
 password = config_mqtt.password
 
@@ -23,7 +20,7 @@ def connect_mqtt():
         else:
             print("Failed to connect, return code %d\n", rc)
 
-    client = mqtt_client.Client(client_id)
+    client = mqtt_client.Client(config_mqtt.client_id)
     client.tls_set(ca_certs=cert_path)
     client.username_pw_set(username, password)
     client.on_connect = on_connect
@@ -31,7 +28,7 @@ def connect_mqtt():
     return client
 
 
-def publish(client, json_data):
+def publish(client, topic, json_data):
     try:
         msg = str(json_data)
         result = client.publish(topic, msg)
@@ -44,12 +41,12 @@ def publish(client, json_data):
         print(f"Error publishing message: {e}")
 
 
-def run(data):
+def run(data, topic_name):
     json_data = json.dumps(data)
     client = connect_mqtt()
     client.loop_start()
     while not client.is_connected():
         time.sleep(1)
-    client.publish(topic, json_data)
+    publish(client, topic_name, json_data)
     time.sleep(1)
     client.disconnect()
