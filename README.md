@@ -85,7 +85,10 @@ They have their profile to see their attendance
   ![](docs/images/4.png)
 
 - ### Hardware Components
-  ![](docs/images/3.png)
+  ![](docs/images/3.jpg)
+
+- ### Database
+  ![](docs/assets/img/database.jpg)
 
 ## 5. BOM
 
