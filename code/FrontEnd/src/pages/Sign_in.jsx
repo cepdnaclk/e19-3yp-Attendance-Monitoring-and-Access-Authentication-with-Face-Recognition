@@ -29,7 +29,7 @@ function Signin() {
 
      // Create the POST requuest
      const {data} = await                                                                            
-     axios.post('https://face-secure.azurewebsites.net/token/',
+     axios.post('https://facesecure.azurewebsites.net/token/',
      user ,{
        headers: {'Content-Type': 'application/json'},
        withCredentials: false,

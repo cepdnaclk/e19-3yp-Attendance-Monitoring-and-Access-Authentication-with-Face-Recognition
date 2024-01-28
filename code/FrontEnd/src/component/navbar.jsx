@@ -12,7 +12,7 @@ const Navbar = () => {
       console.log("logout is pressed")
       try {
         const response = await axios.post(
-          'https://face-secure.azurewebsites.net/attendanceManagement/logout/',
+          'https://facesecure.azurewebsites.net/attendanceManagement/logout/',
           {
             refresh_token: localStorage.getItem('refresh_token'),
           },
