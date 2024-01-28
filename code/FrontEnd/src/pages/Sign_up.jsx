@@ -134,7 +134,7 @@ function Signup() {
             style={{ color: '#318CE7' }}
             onChange={(e) => setLastname(e.target.value)}/>
 
-           {/* <div className="mb-3" style={{ color: '#318CE7' }}>
+           <div className="mb-3" style={{ color: '#318CE7' }}>
                 <select
                   id="form3"
                   className="form-select" 
@@ -142,15 +142,15 @@ function Signup() {
                   onChange={handleGenderChange}
                 >
                   <option value="">Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
+                  <option value="M">Male</option>
+                  <option value="F">Female</option>
+                  <option value="O">Other</option>
                 </select>
-              </div> */}
-            <MDBInput wrapperClass='mb-3' label='Gender' id='form3' type='text'
+              </div>
+            {/* <MDBInput wrapperClass='mb-3' label='Gender' id='form3' type='text'
             value={gender}
             style={{ color: '#318CE7' }}
-            onChange={(e) => setGender(e.target.value)}/>
+            onChange={(e) => setGender(e.target.value)}/> */}
 
 
             <MDBInput wrapperClass='mb-3' label='Age' id='form4' type='text'
@@ -177,7 +177,7 @@ function Signup() {
             style={{ color: '#318CE7' }}
             onChange={(e) => setConfirmpassword(e.target.value)}/>
 
-            {/* <div className="mb-3" style={{ color: '#318CE7' }}>
+            <div className="mb-3" style={{ color: '#318CE7' }}>
                
                 <select
                   id="form9"
@@ -186,16 +186,16 @@ function Signup() {
                   onChange={handleDepartmentChange}
                 >
                   <option value="">Department</option>
-                  <option value="com">Department of Computer Engineering</option>
-                  <option value="elec">Department of Electrical Engineering</option>
-                  <option value="management">Department of Management</option>
+                  <option value="1">Department of Computer Engineering</option>
+                  <option value="2">Department of Electrical Engineering</option>
+                  <option value="3">Department of Management</option>
                 </select>
-              </div> */}
+              </div>
 
-            <MDBInput wrapperClass='mb-3' label='Department name' id='form9' type='text'
+            {/* <MDBInput wrapperClass='mb-3' label='Department name' id='form9' type='text'
             value={depname}
             style={{ color: '#318CE7' }}
-            onChange={(e) => setDepname(e.target.value)}/>
+            onChange={(e) => setDepname(e.target.value)}/> */}
 
             <MDBInput wrapperClass='mb-3' label='Contact address' id='form10' type='text'
             value={address}
