@@ -11,7 +11,7 @@ axios.interceptors.response.use(
 
       try {
         const response = await axios.post(
-          'https://face-secure.azurewebsites.net/token/refresh/',
+          'https://facesecure.azurewebsites.net/token/refresh/',
           {
             refresh: localStorage.getItem('refresh_token'),
           },

@@ -1,0 +1,11 @@
+.MDBDropdownToggle:hover {
+    background-color: lightgrey;
+    color: black;
+}
+
+.custom-dropdown-item {
+    height: 50px; /* Set the desired height for the dropdown items */
+    line-height: 50px; /* Align text vertically within the item */
+    /* Add any other custom styles as needed */
+}
+  

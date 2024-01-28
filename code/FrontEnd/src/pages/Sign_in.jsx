@@ -29,7 +29,7 @@ function Signin() {
 
      // Create the POST requuest
      const {data} = await                                                                            
-     axios.post('https://face-secure.azurewebsites.net/token/',
+     axios.post('https://facesecure.azurewebsites.net/token/',
      user ,{
        headers: {'Content-Type': 'application/json'},
        withCredentials: false,
@@ -93,7 +93,7 @@ function Signin() {
       alignItems: 'center',
     }}
   >
-    <MDBContainer className="my-5 gradient-form" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', margin: '0 auto', maxWidth: '50%',backgroundColor: 'rgba(0,0,0, 0.2)',borderRadius: '15px',transition: 'transform 0.3s ease-in-out', 
+    <MDBContainer className="my-5 gradient-form" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', margin: '0 auto', maxWidth: '50%',backgroundColor: 'rgba(255, 255, 255, 0.6)',borderRadius: '15px',transition: 'transform 0.3s ease-in-out', 
         ':hover': {
           transform: 'scale(1.2)',
         },  }}>

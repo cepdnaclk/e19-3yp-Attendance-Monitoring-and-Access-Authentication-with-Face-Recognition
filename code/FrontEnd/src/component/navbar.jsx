@@ -12,7 +12,7 @@ const Navbar = () => {
       console.log("logout is pressed")
       try {
         const response = await axios.post(
-          'https://face-secure.azurewebsites.net/attendanceManagement/logout/',
+          'https://facesecure.azurewebsites.net/attendanceManagement/logout/',
           {
             refresh_token: localStorage.getItem('refresh_token'),
           },
@@ -25,13 +25,17 @@ const Navbar = () => {
           }
         );
         
-        console.log('Response:', response); // Log the response
+        //console.log('Response:', response); // Log the response
         localStorage.clear();
         axios.defaults.headers.common['Authorization'] = null;
         navigate('/');
       } catch (e) {
         console.log('Logout not working', e);
       }
+    };
+
+    const handleUserDetailsButton = () => {
+      navigate('/user_details');
     };
 
   return (
@@ -44,18 +48,42 @@ const Navbar = () => {
           {/* Left links */}
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link" style={{color:"white"}}>
+            <a 
+                className="nav-link" 
+                style={{ color: "white" }} 
+                onClick={() => navigate('/admin')}
+                onMouseEnter={(e) => e.target.style.color = 'black'} // Change color on hover
+                onMouseLeave={(e) => e.target.style.color = 'white'} // Restore color when mouse leaves
+            >
                 Dashboard
-              </a>
+            </a>
             </li>
           </ul>
           {/* Left links */}
 
+          <div className="d-flex align-items-center mr-5">
+            <button style={{ backgroundColor: "white", color: "black" }} className="btn px-3 me-2" onClick={handleUserDetailsButton}>
+              User Details
+            </button>
+          </div>
+
+          <div className="d-flex align-items-center mr-5">
+            <button style={{ backgroundColor: "white", color: "black" }} className="btn btn-link px-3 me-2" onClick={handleLogout}>
+              Unlock door
+            </button>
+          </div>
+
           <div className="d-flex align-items-center">
-            <button style={{color:"black"}} className="btn btn-link px-3 me-2" onClick={handleLogout}>
+            <button style={{ backgroundColor: "white", color: "black" }} className="btn btn-link px-3 me-2" onClick={handleLogout}>
               Logout
             </button>
           </div>
+
+          {/* <div className="d-flex align-items-center">     style prop was changed
+            <button style={{color:"black"}} className="btn btn-link px-3 me-2" onClick={handleLogout}>
+              Logout
+            </button>
+          </div> */}
         </div>
         {/* Collapsible wrapper */}
       </div>
