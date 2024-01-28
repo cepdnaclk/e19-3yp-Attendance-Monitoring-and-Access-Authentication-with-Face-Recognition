@@ -103,19 +103,19 @@ They have their profile to see their attendance
 
 ## 6.Components
 
-Raspberry Pi 3 Board
-Raspberry Pi Camera Module 3
-RE307 Fingerprint Sensor
-Keypad
-Solenoid Door Lock
-PIR Sensor Module     
+-Raspberry Pi 3 Board
+-Raspberry Pi Camera Module 3
+-RE307 Fingerprint Sensor
+-Keypad
+-Solenoid Door Lock
+-PIR Sensor Module     
 
 ## 7.Extendibility & Scalability
 
-Integration with Other Systems
-Advanced Reporting Modules
-Accurate & consistent performance
-Regular checking
-Power switching mode
-Error Handling
-Easily scalable
+-Integration with Other Systems
+-Advanced Reporting Modules
+-Accurate & consistent performance
+-Regular checking
+-Power switching mode
+-Error Handling
+-Easily scalable
