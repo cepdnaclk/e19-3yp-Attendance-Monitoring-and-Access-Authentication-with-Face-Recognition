@@ -98,6 +98,10 @@ const User_Details = () => {
 
                     <MDBIcon fab icon="searchengin" className='ms-1 ml-3' size='3x'/>
                 </div>
+
+                <div>
+                    
+                </div>
             </div>
 
         </div>

@@ -56,7 +56,8 @@ const Admin_Dashboard = () => {
     const onActiveMode = async () => {
         const activateData = {
             "mode" : "active",
-            "level" : securityLevel
+            "level" : securityLevel,
+            "topic" : 1
         };
       
         try {
@@ -112,7 +113,8 @@ const Admin_Dashboard = () => {
         const securityLevelData = {
             "mode" : "configure",
             "cmd" : "change_level",
-            "level" : securityLevel
+            "level" : securityLevel,
+            "topic" : 1
         };
 
         handleConfigurePostRequest(securityLevelData);
@@ -120,12 +122,25 @@ const Admin_Dashboard = () => {
 
     // Train the face recognition model with new employees
     const handleUpdateDevice = () => {
-        // Construct JSON object based on the selected security level
-        const updateData = {
-          "mode" : "configure",
-          "cmd" : "update_device"
-        };
-        handleConfigurePostRequest(updateData);
+        // Get the access token from local storage
+        const accessToken = localStorage.getItem('access_token');
+
+        // Make a GET request to fetch data with the access token included in the headers
+        axios.get('https://facesecure.azurewebsites.net/attendanceManagement/encode-faces/', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+            },
+        })
+        .then(response => {
+            // Handle the response data here
+            console.log('Response:', response.data);
+        })
+        .catch(error => {
+            // Handle errors
+            console.error('Error:', error);
+        });
+        
     };
 
     // Capture images for new employee
@@ -137,7 +152,8 @@ const Admin_Dashboard = () => {
           "mode" : "configure",
           "cmd" : "capture_photo",
           "emp_id" : selectedEmployeeId,
-          "emp_name" : selectedEmployeeFirstName
+          "emp_name" : selectedEmployeeFirstName,
+          "topic" : 1
         };
         handleConfigurePostRequest(Data);
     };
@@ -147,7 +163,8 @@ const Admin_Dashboard = () => {
           "mode" : "configure",
           "cmd" : "capture_finger",
           "emp_id" : selectedEmployeeId,
-          "emp_name" : selectedEmployeeFirstName
+          "emp_name" : selectedEmployeeFirstName,
+          "topic" : 1
         };
         handleConfigurePostRequest(data);
     };
@@ -157,7 +174,8 @@ const Admin_Dashboard = () => {
           "mode" : "configure",
           "cmd" : "capture_pincode",
           "emp_id" : selectedEmployeeId,
-          "emp_name" : selectedEmployeeFirstName
+          "emp_name" : selectedEmployeeFirstName,
+          "topic" : 1
         };
         handleConfigurePostRequest(data);
     };
